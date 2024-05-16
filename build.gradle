@@ -11,6 +11,11 @@ java {
     sourceCompatibility = '17'
 }
 
+// 빌드시 plain jar 파일이 만들어지지 않도록 추가
+jar {
+    enabled = false
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
