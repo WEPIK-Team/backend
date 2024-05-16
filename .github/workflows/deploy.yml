@@ -7,6 +7,7 @@ on:
     branches: [ "main" ]
 
 env:
+    AWS_REGION: ap-northeast-2
     S3_BUCKET_NAME: wepik-s3-bucket
     CODE_DEPLOY_APPLICATION_NAME: wepik-codedeploy-app
     CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: wepik-deployment-group
@@ -38,13 +39,13 @@ jobs:
     - name: Make zip file
       run: zip -r ./$GITHUB_SHA.zip .
 
-    # AWS 인증
+    # (4) AWS 인증 (IAM 사용자 Access Key, Secret Key 활용)
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }}
+        aws-region: ${{ env.AWS_REGION }}
 
     # 빌드 결과물을 S3 버킷에 업로드 
     - name: Upload to AWS S3
