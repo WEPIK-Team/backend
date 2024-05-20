@@ -1,44 +1,62 @@
 package wepik.backend.module.member.dao;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import wepik.backend.global.common.BaseTimeEntity;
+import wepik.backend.module.template.dao.MemTempMapping;
+import wepik.backend.module.template.dao.Question;
 
 @Entity
 @Getter
-@Table(name = "MEMBER")
-public class Member {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class Member extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long id;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column
+    @NotBlank
+    @Size(min = 2, max = 10)
+    @Column(nullable = false, length = 10, unique = true)
     private String nickname;
 
-    @Column
+    @NotNull
+    @Size(max = 30)
     @Email
+    @Column(nullable = false, length = 30, unique = true)
     private String email;
 
-    @Column
+    @NotBlank
+    @Column(nullable = false)
     private String password;
 
-    @Column(name = "CREATED_AT")
-    private LocalDateTime createAT;
-
-    @Column
+    @NotNull
+    @Column(nullable = false)
     private Boolean active;
 
-    @Column
+    @NotNull
+    @Column(nullable = false)
     private String provider;
+
+    @OneToMany(mappedBy = "member")
+    private List<Question> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<MemTempMapping> memTempMappings = new ArrayList<>();
 }

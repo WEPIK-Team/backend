@@ -1,15 +1,18 @@
 package wepik.backend.module.template.dao;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Tag {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,5 +21,8 @@ public class Tag {
 
     @Column(name = "tag_name", nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "tag")
+    private List<TemplateTag> templateTags = new ArrayList<>();
 
 }
