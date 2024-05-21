@@ -3,9 +3,12 @@ package wepik.backend.module.template.application;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import wepik.backend.global.exception.ErrorCode;
+import wepik.backend.global.exception.WepikException;
 import wepik.backend.module.template.dao.Question;
 import wepik.backend.module.template.dao.QuestionRepository;
 import wepik.backend.module.template.dto.QuestionRequest;
+import wepik.backend.module.template.dto.QuestionResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -19,15 +22,17 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
-    public Question findQuestion(final Long questionId) {
-        return questionRepository.findById(questionId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 id값에 맞는 질문이 없습니다."));
+    public QuestionResponse findQuestion(final Long questionId) {
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_QUESTION));
+
+        return QuestionResponse.fromEntity(question);
     }
 
     @Transactional
     public void delete(final Long questionId) {
         questionRepository.findById(questionId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 id값에 맞는 질문이 없습니다."));
+                .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_QUESTION));
         questionRepository.deleteById(questionId);
     }
 }
