@@ -46,9 +46,4 @@ public class Question extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
     private List<SelectQuestion> selectQuestions = new ArrayList<>();
-
-    @OneToOne
-    @JoinColumn(name = "answer_id")
-    private Answer answer;
-
 }

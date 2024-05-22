@@ -24,7 +24,7 @@ public class ResultService {
 
     private final ResultRepository resultRepository;
 
-    public ResultDto loadResult(UUID senderUUID, UUID receiverUUID) {
+    public ResultDto loadResult(String senderUUID, String receiverUUID) {
 
         //sender
         Result senderResult = resultRepository.findResultById(senderUUID);

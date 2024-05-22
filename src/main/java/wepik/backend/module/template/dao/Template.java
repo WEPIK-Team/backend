@@ -21,6 +21,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import wepik.backend.global.common.BaseTimeEntity;
 import wepik.backend.module.file.File;
+import wepik.backend.module.result.dao.Answer;
+import wepik.backend.module.result.dao.Result;
 
 @Entity
 @Getter
@@ -52,4 +54,7 @@ public class Template extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "template")
     private List<MemTempMapping> memTempMappings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "template")
+    private List<Result> results = new ArrayList<>();
 }

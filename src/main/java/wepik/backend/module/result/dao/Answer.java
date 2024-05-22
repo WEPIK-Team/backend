@@ -28,7 +28,7 @@ public class Answer extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private AnswerType type;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
 

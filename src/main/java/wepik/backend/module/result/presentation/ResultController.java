@@ -15,7 +15,7 @@ public class ResultController {
     private final ResultService resultService;
 
     @GetMapping("/result")
-    public ResultDto getResult(@RequestParam UUID senderId, @RequestParam UUID receiverId) {
+    public ResultDto getResult(@RequestParam String senderId, @RequestParam String receiverId) {
 
         return resultService.loadResult(senderId, receiverId);
     }
