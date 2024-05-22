@@ -1,11 +1,11 @@
-package wepik.backend.module.template.dto;
+package wepik.backend.module.question.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import wepik.backend.module.template.dao.AnswerType;
-import wepik.backend.module.template.dao.Question;
+import wepik.backend.module.question.dao.AnswerType;
+import wepik.backend.module.question.dao.Question;
 
 @Data
 @Builder

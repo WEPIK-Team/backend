@@ -1,13 +1,12 @@
-package wepik.backend.module.template.presentation;
+package wepik.backend.module.question.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import wepik.backend.module.template.application.QuestionService;
-import wepik.backend.module.template.dao.Question;
-import wepik.backend.module.template.dto.QuestionRequest;
-import wepik.backend.module.template.dto.QuestionResponse;
+import wepik.backend.module.question.application.QuestionService;
+import wepik.backend.module.question.dto.QuestionRequest;
+import wepik.backend.module.question.dto.QuestionResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,8 +18,8 @@ public class QuestionController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     @Operation(summary = "질문 생성", description = "질문을 생성한다.")
-    public void createQuestion(@RequestBody QuestionRequest questionRequest) {
-        questionService.save(questionRequest);
+    public QuestionResponse createQuestion(@RequestBody QuestionRequest questionRequest) {
+        return questionService.save(questionRequest);
     }
 
     @ResponseStatus(HttpStatus.OK)

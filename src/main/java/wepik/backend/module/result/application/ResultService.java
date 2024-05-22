@@ -1,6 +1,6 @@
 package wepik.backend.module.result.application;
 
-import static wepik.backend.module.template.dao.AnswerType.*;
+import static wepik.backend.module.question.dao.AnswerType.*;
 
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import wepik.backend.module.result.dao.ResultRepository;
 import wepik.backend.module.result.dto.AnswerDto;
 import wepik.backend.module.result.dto.ResultDto;
 import wepik.backend.module.result.dto.SelectQuestionDto;
-import wepik.backend.module.template.dao.SelectQuestion;
+import wepik.backend.module.question.dao.SelectQuestion;
 
 @Service
 @RequiredArgsConstructor

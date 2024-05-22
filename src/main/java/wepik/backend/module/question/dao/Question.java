@@ -1,4 +1,4 @@
-package wepik.backend.module.template.dao;
+package wepik.backend.module.question.dao;
 
 import jakarta.persistence.*;
 
@@ -10,6 +10,7 @@ import wepik.backend.global.common.BaseTimeEntity;
 import wepik.backend.module.file.File;
 import wepik.backend.module.member.dao.Member;
 import wepik.backend.module.result.dao.Answer;
+import wepik.backend.module.template.dao.Template;
 
 @Entity
 @Getter

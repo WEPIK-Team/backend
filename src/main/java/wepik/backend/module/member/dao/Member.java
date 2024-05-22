@@ -2,7 +2,7 @@ package wepik.backend.module.member.dao;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wepik.backend.global.common.BaseTimeEntity;
 import wepik.backend.module.template.dao.MemTempMapping;
-import wepik.backend.module.template.dao.Question;
+import wepik.backend.module.question.dao.Question;
 
 @Entity
 @Getter

@@ -1,13 +1,11 @@
 package wepik.backend.module.result.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import wepik.backend.module.template.dao.AnswerType;
+import wepik.backend.module.question.dao.AnswerType;
 
 @Getter
 @Setter

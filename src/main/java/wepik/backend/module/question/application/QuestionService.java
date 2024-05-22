@@ -1,14 +1,14 @@
-package wepik.backend.module.template.application;
+package wepik.backend.module.question.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wepik.backend.global.exception.ErrorCode;
 import wepik.backend.global.exception.WepikException;
-import wepik.backend.module.template.dao.Question;
-import wepik.backend.module.template.dao.QuestionRepository;
-import wepik.backend.module.template.dto.QuestionRequest;
-import wepik.backend.module.template.dto.QuestionResponse;
+import wepik.backend.module.question.dao.Question;
+import wepik.backend.module.question.dao.QuestionRepository;
+import wepik.backend.module.question.dto.QuestionRequest;
+import wepik.backend.module.question.dto.QuestionResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -17,9 +17,9 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
 
     @Transactional
-    public void save(final QuestionRequest questionRequest) {
+    public QuestionResponse save(final QuestionRequest questionRequest) {
         Question question = questionRequest.toEntity();
-        questionRepository.save(question);
+        return QuestionResponse.fromEntity(questionRepository.save(question));
     }
 
     public QuestionResponse findQuestion(final Long questionId) {
