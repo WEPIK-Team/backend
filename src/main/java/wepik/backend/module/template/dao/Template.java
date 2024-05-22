@@ -11,6 +11,7 @@ import org.hibernate.annotations.ColumnDefault;
 import wepik.backend.global.common.BaseTimeEntity;
 import wepik.backend.module.file.File;
 import wepik.backend.module.question.dao.Question;
+import wepik.backend.module.result.dao.Result;
 import wepik.backend.module.template.dto.TemplateTagDto;
 
 @Entity
@@ -44,4 +45,7 @@ public class Template extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "template")
     private List<MemTempMapping> memTempMappings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "template")
+    private List<Result> results = new ArrayList<>();
 }
