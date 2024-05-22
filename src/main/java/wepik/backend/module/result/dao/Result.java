@@ -21,16 +21,16 @@ import wepik.backend.module.template.dao.Template;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Result {
 
-    @Id @GeneratedValue
+    @Id
     @Column(name = "result_id")
     @JdbcType(VarcharJdbcType.class)
-    private UUID id;
+    private String id;
 
     @OneToMany(mappedBy = "result")
     @Column(name = "answer_id", nullable = true)
     private List<Answer> answers = new ArrayList<>();
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "template_id")
     private Template template;
 }

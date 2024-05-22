@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ResultRepository extends JpaRepository<Result, UUID> {
+public interface ResultRepository extends JpaRepository<Result, String> {
 
-    Result findResultById(UUID answerId);
+    Result findResultById(String answerId);
 }

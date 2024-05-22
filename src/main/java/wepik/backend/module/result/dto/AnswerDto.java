@@ -1,11 +1,14 @@
 package wepik.backend.module.result.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import wepik.backend.module.question.dao.AnswerType;
+import wepik.backend.module.template.dao.AnswerType;
 
 @Getter
 @Setter
@@ -13,22 +16,23 @@ import wepik.backend.module.question.dao.AnswerType;
 @Builder
 public class AnswerDto {
 
-    //질문 순서
+    @Schema(description = "질문 순서", example = "1")
     private int sequence;
 
-    //질문 제목
+    @Schema(description = "질문 제목", example = "내가 제일 좋아하는 데이트 장소는?")
     private String title;
 
-    //답변 타입
+    @Schema(description = "질문에 대한 타입", example = "INPUT")
     private AnswerType type;
 
-    //답변 내용
+    @Schema(description = "답변 내용", example = "한강")
     private String answer;
 
-    //질문 이미지 사진
+
+    @Schema(description = "질문 이미지 사진", example = "http://weplik.co.kr/img/123456")
     private String imgPath;
 
-    //객관식
+    @Schema(description = "객관식 문항 리스트", example = "")
     private List<SelectQuestionDto> selectQuestionDtos;
 
 }

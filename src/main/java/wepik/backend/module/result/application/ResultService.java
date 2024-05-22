@@ -6,14 +6,13 @@ import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import wepik.backend.module.result.dao.Answer;
 import wepik.backend.module.result.dao.Result;
 import wepik.backend.module.result.dao.ResultRepository;
 import wepik.backend.module.result.dto.AnswerDto;
-import wepik.backend.module.result.dto.ResultDto;
+import wepik.backend.module.result.dto.ResultResponse;
 import wepik.backend.module.result.dto.SelectQuestionDto;
 import wepik.backend.module.question.dao.SelectQuestion;
 
@@ -24,7 +23,7 @@ public class ResultService {
 
     private final ResultRepository resultRepository;
 
-    public ResultDto loadResult(UUID senderUUID, UUID receiverUUID) {
+    public ResultResponse loadResult(String senderUUID, String receiverUUID) {
 
         //sender
         Result senderResult = resultRepository.findResultById(senderUUID);
@@ -34,7 +33,7 @@ public class ResultService {
         Result receiverResult = resultRepository.findResultById(receiverUUID);
         List<AnswerDto> receiverAnswerDto = toAnswerDto(receiverResult);
 
-        return ResultDto.builder()
+        return ResultResponse.builder()
                 .templateTitle(senderResult.getTemplate().getTitle())
                 .senderAnswers(senderAnswerDto)
                 .receiverAnswers(receiverAnswerDto)
