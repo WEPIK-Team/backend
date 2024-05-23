@@ -37,7 +37,7 @@ public class Template extends BaseTimeEntity {
     @JoinColumn(name = "file_id")
     private File file;
 
-    @OneToMany(mappedBy = "template")
+    @OneToMany(mappedBy = "template", cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "template", cascade = CascadeType.ALL)

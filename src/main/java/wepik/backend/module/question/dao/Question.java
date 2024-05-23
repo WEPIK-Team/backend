@@ -47,4 +47,8 @@ public class Question extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
     private List<SelectQuestion> selectQuestions = new ArrayList<>();
+
+    public void addQuestions(Template template) {
+        this.template = template;
+    }
 }

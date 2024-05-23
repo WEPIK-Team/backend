@@ -6,12 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wepik.backend.global.exception.ErrorCode;
 import wepik.backend.global.exception.WepikException;
+import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.template.dao.Template;
 import wepik.backend.module.template.dao.TemplateRepository;
 import wepik.backend.module.template.dao.TemplateTag;
 import wepik.backend.module.template.dto.TemplateRequest;
 import wepik.backend.module.template.dto.TemplateResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -28,6 +30,10 @@ public class TemplateService {
         for (TemplateTag templateTag : templateTags) {
             templateTag.addTemplate(template);
         }
+        List<Question> questions = template.getQuestions();
+        for (Question question : questions) {
+            question.addQuestions(template);
+        }
         return TemplateResponse.fromEntity(templateRepository.save(template));
     }
 
@@ -36,6 +42,12 @@ public class TemplateService {
         Template template = templateRepository.findById(templateId)
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_TEMPLATE));
         return TemplateResponse.fromEntity(template);
+    }
+
+    @Transactional(readOnly = true)
+    public List<TemplateResponse> findTemplates() {
+        List<Template> templates = templateRepository.findAll();
+        return templates.stream().map(template -> TemplateResponse.fromEntity(template)).collect(Collectors.toList());
     }
 
     public void deleteById(final Long templateId) {
