@@ -1,21 +1,20 @@
-package wepik.backend.module.template.dao;
+package wepik.backend.module.question.dao;
 
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import wepik.backend.global.common.BaseTimeEntity;
 import wepik.backend.module.file.File;
 import wepik.backend.module.member.dao.Member;
 import wepik.backend.module.result.dao.Answer;
+import wepik.backend.module.template.dao.Template;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Question extends BaseTimeEntity {
@@ -32,13 +31,13 @@ public class Question extends BaseTimeEntity {
     private AnswerType type;
 
     @Column(nullable = true)
-    private int questionSequence;
+    private Integer questionSequence;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "template_id")
     private Template template;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "file_id")
     private File file;
 
@@ -48,9 +47,4 @@ public class Question extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
     private List<SelectQuestion> selectQuestions = new ArrayList<>();
-
-    @OneToOne
-    @JoinColumn(name = "answer_id")
-    private Answer answer;
-
 }

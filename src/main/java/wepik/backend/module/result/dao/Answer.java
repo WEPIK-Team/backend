@@ -8,8 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wepik.backend.global.common.BaseTimeEntity;
-import wepik.backend.module.template.dao.Question;
-import wepik.backend.module.template.dao.AnswerType;
+import wepik.backend.module.question.dao.Question;
+import wepik.backend.module.question.dao.AnswerType;
 
 @Entity
 @Getter
@@ -28,7 +28,7 @@ public class Answer extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private AnswerType type;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
 

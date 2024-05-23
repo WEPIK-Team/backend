@@ -1,4 +1,4 @@
-package wepik.backend.module.template.dao;
+package wepik.backend.module.question.dao;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

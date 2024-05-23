@@ -44,3 +44,4 @@ out/
 
 ### properties ###
 *.properties
+application.yml
