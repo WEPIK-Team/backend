@@ -25,7 +25,7 @@ import java.util.UUID;
 public class FileService {
 
     private static final String S3_URL =  "https://wepik-s3-bucket.s3.ap-northeast-2.amazonaws.com/";
-    private static final String UPLOAD_DIR = "wepik-images/files/";
+    private static final String UPLOAD_DIR = "images/";
     private final S3Client s3Client;
 
     @Value("${cloud.aws.s3.bucket}")
