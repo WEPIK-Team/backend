@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import wepik.backend.module.file.File;
+import wepik.backend.module.question.dao.Question;
+import wepik.backend.module.question.dto.QuestionResponse;
 import wepik.backend.module.template.dao.Template;
 
 import java.util.List;
@@ -29,6 +31,8 @@ public class TemplateResponse {
 
     private List<TemplateTagDto> templateTags;
 
+    private List<QuestionResponse> questions;
+
     public static TemplateResponse fromEntity(Template template) {
         return TemplateResponse.builder()
                 .id(template.getId())
@@ -36,12 +40,19 @@ public class TemplateResponse {
                 .useCount(template.getUseCount())
                 //.file() TODO: 파일 추가 예정
                 .templateTags(getTemplateTags(template))
+                .questions(getQuestions(template))
                 .build();
     }
 
     private static List<TemplateTagDto> getTemplateTags(Template template) {
         return template.getTemplateTags().stream()
                 .map(TemplateTagDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    private static List<QuestionResponse> getQuestions(Template template) {
+        return template.getQuestions().stream()
+                .map(QuestionResponse::fromEntity)
                 .collect(Collectors.toList());
     }
 }

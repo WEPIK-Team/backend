@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wepik.backend.global.common.BaseTimeEntity;
@@ -13,6 +14,7 @@ import wepik.backend.module.question.dao.AnswerType;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Answer extends BaseTimeEntity {
@@ -32,7 +34,11 @@ public class Answer extends BaseTimeEntity {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "result_id")
     private Result result;
+
+    public void setResult(Result result) {
+        this.result = result;
+    }
 }

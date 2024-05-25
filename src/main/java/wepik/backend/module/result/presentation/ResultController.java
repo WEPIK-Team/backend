@@ -1,6 +1,7 @@
 package wepik.backend.module.result.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,6 +11,7 @@ import wepik.backend.module.result.dto.ResultResponse;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Result", description = "결과 API")
 public class ResultController {
 
     private final ResultService resultService;

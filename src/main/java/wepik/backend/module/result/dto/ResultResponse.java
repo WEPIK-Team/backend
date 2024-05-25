@@ -15,8 +15,8 @@ public class ResultResponse {
     private String templateTitle;
 
     @Schema(description = "질문 생성자의 답변", example = "")
-    private List<AnswerDto> senderAnswers;
+    private List<ResultAnswerDto> senderAnswers;
 
     @Schema(description = "질문 받은 사람의 답변", example = "")
-    private List<AnswerDto> receiverAnswers;
+    private List<ResultAnswerDto> receiverAnswers;
 }
