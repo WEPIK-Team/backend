@@ -3,14 +3,12 @@ package wepik.backend.module.result.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import wepik.backend.module.question.dao.AnswerType;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @Builder
+@AllArgsConstructor
 public class AnswerDto {
 
     @Schema(description = "답변 내용", example = "한강")
