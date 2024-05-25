@@ -9,10 +9,9 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import wepik.backend.global.common.BaseTimeEntity;
-import wepik.backend.module.file.File;
+import wepik.backend.module.file.dao.File;
 import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.result.dao.Result;
-import wepik.backend.module.template.dto.TemplateTagDto;
 
 @Entity
 @Getter

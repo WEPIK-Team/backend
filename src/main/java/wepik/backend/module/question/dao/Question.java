@@ -7,9 +7,8 @@ import java.util.List;
 
 import lombok.*;
 import wepik.backend.global.common.BaseTimeEntity;
-import wepik.backend.module.file.File;
+import wepik.backend.module.file.dao.File;
 import wepik.backend.module.member.dao.Member;
-import wepik.backend.module.result.dao.Answer;
 import wepik.backend.module.template.dao.Template;
 
 @Entity

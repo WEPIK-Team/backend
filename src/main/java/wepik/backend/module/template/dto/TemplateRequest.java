@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import wepik.backend.module.file.File;
 import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.question.dto.QuestionRequest;
 import wepik.backend.module.template.dao.Template;
