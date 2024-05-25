@@ -65,5 +65,4 @@ public class TemplateService {
         List<Question> questions = questionRepository.findByTemplateIdOrderByQuestionSequence(templateId);
         return questions.stream().map(question -> QuestionResponse.fromEntity(question)).collect(Collectors.toList());
     }
-
 }
