@@ -1,4 +1,4 @@
-package wepik.backend.module.file;
+package wepik.backend.module.file.dao;
 
 public enum FileType {
     JPEG("image/jpeg", "jpeg"),
