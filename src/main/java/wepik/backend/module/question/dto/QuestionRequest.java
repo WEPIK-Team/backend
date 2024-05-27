@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import wepik.backend.module.file.dao.File;
 import wepik.backend.module.question.dao.AnswerType;
 import wepik.backend.module.question.dao.Question;
 
@@ -19,12 +20,13 @@ public class QuestionRequest {
     private AnswerType type;
 
     @Schema(description = "DB에 저장되는 이미지 이름", example = "4df23447-2355-45h2-8783-7f6gd2ceb848_고양이.jpg")
-    private String storedImageName;
+    private String storedName;
 
-    public Question toEntity() {
+    public Question toEntity(File file) {
         return Question.builder()
                 .title(title)
                 .type(type)
+                .file(file)
                 .build();
     }
 }

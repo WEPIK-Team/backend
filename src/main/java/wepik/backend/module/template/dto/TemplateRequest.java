@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import wepik.backend.module.file.dao.File;
 import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.question.dto.QuestionRequest;
 import wepik.backend.module.template.dao.Template;
@@ -30,9 +31,9 @@ public class TemplateRequest {
     public Template toEntity() {
         return Template.builder()
                 .title(title)
-                // .file() TODO: 파일 추가 예정
                 .templateTags(getTemplateTags())
                 .questions(getQuestions())
+                .file()
                 .build();
     }
 

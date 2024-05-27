@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import wepik.backend.module.file.dao.File;
 import wepik.backend.module.question.dao.AnswerType;
 import wepik.backend.module.question.dao.Question;
 
@@ -21,16 +22,18 @@ public class QuestionResponse {
     @Schema(description = "질문 타입", example = "BAR")
     private AnswerType type;
 
-    @Schema(description = "이미지 URL", example = "https://wepik-static-files4df23447-2355-45h2-8783-7f6gd2ceb848_고양이.jpg")
+    @Schema(description = "이미지 URL", example = "https://wepik-static-files/4df23447-2355-45h2-8783-7f6gd2ceb848_고양이.jpg")
     private String imageURL;
 
 
     public static QuestionResponse fromEntity(Question question) {
+        File file = question.getFile();
         return QuestionResponse.builder()
                 .id(question.getId())
                 .title(question.getTitle())
                 .type(question.getType())
-                .imageURL(null) // TODO: 파일 만들기 전까지 임시 null
+                .imageURL(file != null ? file.getPath() + file.getStoredName() : null)
                 .build();
     }
+
 }
