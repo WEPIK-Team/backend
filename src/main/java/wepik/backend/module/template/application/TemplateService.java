@@ -13,6 +13,7 @@ import wepik.backend.module.question.dto.QuestionResponse;
 import wepik.backend.module.template.dao.Template;
 import wepik.backend.module.template.dao.TemplateRepository;
 import wepik.backend.module.template.dao.TemplateTag;
+import wepik.backend.module.template.dto.TemplateListResponse;
 import wepik.backend.module.template.dto.TemplateRequest;
 import wepik.backend.module.template.dto.TemplateResponse;
 import java.util.List;
@@ -49,9 +50,9 @@ public class TemplateService {
     }
 
     @Transactional(readOnly = true)
-    public List<TemplateResponse> findTemplates() {
+    public List<TemplateListResponse> findTemplates() {
         List<Template> templates = templateRepository.findAll();
-        return templates.stream().map(template -> TemplateResponse.fromEntity(template)).collect(Collectors.toList());
+        return templates.stream().map(template -> TemplateListResponse.fromEntity(template)).collect(Collectors.toList());
     }
 
     public void deleteById(final Long templateId) {
