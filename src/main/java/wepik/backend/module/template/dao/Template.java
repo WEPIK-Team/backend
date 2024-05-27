@@ -33,7 +33,7 @@ public class Template extends BaseTimeEntity {
     private int useCount;
 
     @OneToOne
-    @JoinColumn(name = "file_id")
+    @JoinColumn(name = "file_id", nullable = false)
     private File file;
 
     @OneToMany(mappedBy = "template", cascade = CascadeType.ALL)
