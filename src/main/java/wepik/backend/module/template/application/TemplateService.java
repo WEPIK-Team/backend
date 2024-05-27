@@ -10,6 +10,8 @@ import wepik.backend.global.exception.WepikException;
 import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.question.dao.QuestionRepository;
 import wepik.backend.module.question.dto.QuestionResponse;
+import wepik.backend.module.template.dao.Tag;
+import wepik.backend.module.template.dao.TagRepository;
 import wepik.backend.module.template.dao.Template;
 import wepik.backend.module.template.dao.TemplateRepository;
 import wepik.backend.module.template.dao.TemplateTag;
@@ -27,6 +29,7 @@ public class TemplateService {
 
     private final TemplateRepository templateRepository;
     private final QuestionRepository questionRepository;
+    private final TagRepository tagRepository;
 
     public TemplateResponse save(final TemplateRequest request) {
         Template template = request.toEntity();
@@ -65,5 +68,10 @@ public class TemplateService {
     public List<QuestionResponse> findQuestions(final Long templateId) {
         List<Question> questions = questionRepository.findByTemplateIdOrderByQuestionSequence(templateId);
         return questions.stream().map(question -> QuestionResponse.fromEntity(question)).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> findAllTags() {
+        return tagRepository.findAll().stream().map(Tag::getName).collect(Collectors.toList());
     }
 }

@@ -48,4 +48,11 @@ public class TemplateController {
     public void deleteTemplate(@PathVariable Long id) {
         templateService.deleteById(id);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/tag")
+    @Operation(summary = "모든 태그 조회", description = "저장되어 있는 모든 태그를 조회한다.")
+    public List<String> findAllTag() {
+        return templateService.findAllTags();
+    }
 }
