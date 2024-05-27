@@ -44,4 +44,3 @@ out/
 
 ### properties ###
 *.properties
-src/main/resources/config/application.yml
