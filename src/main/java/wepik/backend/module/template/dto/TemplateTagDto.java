@@ -15,7 +15,7 @@ public class TemplateTagDto {
     @Schema(description = "템플릿 태그", example = "사랑")
     private String tagName;
 
-    public TemplateTag toEntity() {
+    public static TemplateTag toEntity(String tagName) {
         return TemplateTag.builder()
                 .tag(Tag.builder().name(tagName).build())
                 .build();

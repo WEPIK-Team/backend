@@ -28,7 +28,7 @@ public class TemplateRequest {
     @Schema(description = "DB에 저장되는 이미지 이름", example = "4df23447-2355-45h2-8783-7f6gd2ceb848_고양이.jpg")
     private String storedName;
 
-    private List<TemplateTagDto> tags;
+    private List<String> tags;
 
     private List<QuestionRequest> questions;
 
@@ -43,7 +43,9 @@ public class TemplateRequest {
     }
 
     private List<TemplateTag> getTemplateTags() {
-        return tags.stream().map(TemplateTagDto::toEntity).collect(Collectors.toList());
+        return tags.stream()
+                .map(TemplateTagDto::toEntity)
+                .collect(Collectors.toList());
     }
 
     private List<Question> getQuestions (List<File> files) {
