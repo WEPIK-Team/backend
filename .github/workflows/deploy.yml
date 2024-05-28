@@ -19,9 +19,12 @@ jobs:
     environment: production
 
     steps:
-    # 기본 체크아웃
+    # 기본 체크아웃 및 submodule 환경변수
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        token: ${{ secrets.SUBMODULE_TOKEN }}
 
     # JDK 17 세팅
     - name: Set up JDK 17
