@@ -11,7 +11,6 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class File {
-
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "file_id", nullable = false)
     private Long id;

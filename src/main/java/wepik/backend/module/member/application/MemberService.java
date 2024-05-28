@@ -10,7 +10,6 @@ import wepik.backend.module.member.dao.Member;
 import wepik.backend.module.member.dao.Role;
 import wepik.backend.module.member.dto.LoginRequest;
 import wepik.backend.module.member.dao.MemberRepository;
-
 @Service
 @RequiredArgsConstructor
 @Transactional

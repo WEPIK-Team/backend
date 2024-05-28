@@ -28,19 +28,20 @@ public class TemplateResponse {
     @Schema(description = "사용된 횟수", example = "23")
     private int useCount;
 
-    @Schema(description = "템플릿 썸네일", example = "아직 null")
-    private File file;
+    @Schema(description = "이미지 URL", example = "https://wepik-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/1a5de0ff-7948-4ca1-8979-15701385f778_programmers.jpeg")
+    private String imageURL;
 
     private List<String> templateTags;
 
     private List<QuestionResponse> questions;
 
     public static TemplateResponse fromEntity(Template template) {
+        File file = template.getFile();
         return TemplateResponse.builder()
                 .id(template.getId())
                 .title(template.getTitle())
                 .useCount(template.getUseCount())
-                //.file() TODO: 파일 추가 예정
+                .imageURL(file != null ? file.getPath() + file.getStoredName() : null)
                 .templateTags(getTemplateTags(template))
                 .questions(getQuestions(template))
                 .build();
