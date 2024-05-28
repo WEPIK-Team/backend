@@ -1,5 +1,6 @@
 package wepik.backend.module.member.presentation;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import wepik.backend.module.member.dto.LoginRequest;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
+@Tag(name = "Member", description = "멤버 API")
 public class MemberController {
 
     private final MemberService memberService;
