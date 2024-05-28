@@ -1,27 +1,33 @@
 package wepik.backend.module.question.application;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wepik.backend.global.exception.ErrorCode;
 import wepik.backend.global.exception.WepikException;
+import wepik.backend.module.file.dao.File;
+import wepik.backend.module.file.dao.FileRepository;
 import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.question.dao.QuestionRepository;
 import wepik.backend.module.question.dto.QuestionRequest;
 import wepik.backend.module.question.dto.QuestionResponse;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class QuestionService {
-
     private final QuestionRepository questionRepository;
-
+    private final FileRepository fileRepository;
     public QuestionResponse save(final QuestionRequest questionRequest) {
-        Question question = questionRequest.toEntity();
+
+        File file = fileRepository.findByStoredName(questionRequest.getStoredName())
+                .orElse(null);
+
+        Question question = questionRequest.toEntity(file);
         return QuestionResponse.fromEntity(questionRepository.save(question));
     }
 

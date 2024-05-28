@@ -11,14 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import wepik.backend.module.result.application.AnswerService;
 import wepik.backend.module.result.dto.AnswerRequest;
 import wepik.backend.module.result.dto.AnswerResponse;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/answer")
 public class AnswerController {
 
     private final AnswerService answerService;
-
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     @Operation(summary = "답변하기", description = "답변하기")

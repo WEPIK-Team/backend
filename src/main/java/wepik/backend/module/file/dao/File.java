@@ -1,26 +1,23 @@
-package wepik.backend.module.file;
+package wepik.backend.module.file.dao;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Entity
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class File {
-
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "file_id", nullable = false)
     private Long id;
 
     @NotBlank
     @Column(nullable = false)
-    private String uploadName;
+    private String originalName;
 
     @Column(nullable = false)
     private String storedName;
@@ -35,5 +32,5 @@ public class File {
 
     @NotNull
     @Column(nullable = false)
-    private Long Size;
+    private Long size;
 }
