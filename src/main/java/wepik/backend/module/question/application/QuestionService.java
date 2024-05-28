@@ -26,9 +26,8 @@ public class QuestionService {
     private final FileRepository fileRepository;
     public QuestionResponse save(final QuestionRequest questionRequest) {
 
-        log.info("image={}", questionRequest.getStoredName());
         File file = fileRepository.findByStoredName(questionRequest.getStoredName())
-                .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_FILE));
+                .orElse(null);
 
         Question question = questionRequest.toEntity(file);
         return QuestionResponse.fromEntity(questionRepository.save(question));

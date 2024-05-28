@@ -22,7 +22,7 @@ public class QuestionResponse {
     @Schema(description = "질문 타입", example = "BAR")
     private AnswerType type;
 
-    @Schema(description = "이미지 URL", example = "https://wepik-static-files/4df23447-2355-45h2-8783-7f6gd2ceb848_고양이.jpg")
+    @Schema(description = "이미지 URL", example = "https://wepik-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/15ee44f4-eaad-400d-aaa1-ff38fd23df58_03445adc-ceb1-476e-ad62-ab643347a473_강아지.jpeg")
     private String imageURL;
 
 
@@ -35,5 +35,7 @@ public class QuestionResponse {
                 .imageURL(file != null ? file.getPath() + file.getStoredName() : null)
                 .build();
     }
+
+
 
 }

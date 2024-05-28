@@ -7,6 +7,7 @@ import lombok.Data;
 import wepik.backend.module.file.dao.File;
 import wepik.backend.module.question.dao.AnswerType;
 import wepik.backend.module.question.dao.Question;
+import wepik.backend.module.question.dao.Question.QuestionBuilder;
 
 @Data
 @Builder
@@ -23,10 +24,17 @@ public class QuestionRequest {
     private String storedName;
 
     public Question toEntity(File file) {
-        return Question.builder()
+        QuestionBuilder builder = Question.builder()
                 .title(title)
-                .type(type)
-                .file(file)
-                .build();
+                .type(type);
+        if (file != null) {
+            builder.file(file);
+        }
+        return builder.build();
+//        return Question.builder()
+//                .title(title)
+//                .type(type)
+//                .file(file)
+//                .build();
     }
 }
