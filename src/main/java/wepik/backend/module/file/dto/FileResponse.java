@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import wepik.backend.module.file.dao.File;
 import wepik.backend.module.file.dao.FileType;
-
 @Data
 @Builder
 @AllArgsConstructor

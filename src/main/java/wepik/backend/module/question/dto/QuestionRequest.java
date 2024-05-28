@@ -31,10 +31,5 @@ public class QuestionRequest {
             builder.file(file);
         }
         return builder.build();
-//        return Question.builder()
-//                .title(title)
-//                .type(type)
-//                .file(file)
-//                .build();
     }
 }

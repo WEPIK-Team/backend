@@ -7,7 +7,6 @@ import lombok.Data;
 import wepik.backend.module.file.dao.File;
 import wepik.backend.module.question.dao.AnswerType;
 import wepik.backend.module.question.dao.Question;
-
 @Data
 @Builder
 @AllArgsConstructor

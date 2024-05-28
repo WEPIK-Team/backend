@@ -12,7 +12,6 @@ import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.question.dao.QuestionRepository;
 import wepik.backend.module.question.dto.QuestionRequest;
 import wepik.backend.module.question.dto.QuestionResponse;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +20,6 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class QuestionService {
-
     private final QuestionRepository questionRepository;
     private final FileRepository fileRepository;
     public QuestionResponse save(final QuestionRequest questionRequest) {

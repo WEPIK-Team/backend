@@ -2,18 +2,15 @@ package wepik.backend.module.result.application;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wepik.backend.global.exception.ErrorCode;
 import wepik.backend.global.exception.WepikException;
-import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.question.dao.QuestionRepository;
 import wepik.backend.module.result.dao.Answer;
 import wepik.backend.module.result.dao.AnswerRepository;
 import wepik.backend.module.result.dao.Result;
-import wepik.backend.module.result.dao.ResultRepository;
 import wepik.backend.module.result.dto.AnswerDto;
 import wepik.backend.module.result.dto.AnswerRequest;
 import wepik.backend.module.result.dto.AnswerResponse;
@@ -27,7 +24,6 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
     private final TemplateRepository templateRepository;
-
     @Transactional
     public AnswerResponse saveAnswer(AnswerRequest answerRequest) {
         Template template = templateRepository.findById(answerRequest.getTemplateId())
