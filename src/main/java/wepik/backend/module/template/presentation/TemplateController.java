@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import wepik.backend.module.question.dto.QuestionResponse;
 import wepik.backend.module.template.application.TemplateService;
+import wepik.backend.module.template.dto.TemplateListResponse;
 import wepik.backend.module.template.dto.TemplateRequest;
 import wepik.backend.module.template.dto.TemplateResponse;
 
@@ -37,7 +38,7 @@ public class TemplateController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     @Operation(summary = "템플릿 리스트 조회", description = "모든 템플릿 리스트를 조회한다")
-    public List<TemplateResponse> findAll() {
+    public List<TemplateListResponse> findAll() {
         return templateService.findTemplates();
     }
 
@@ -49,9 +50,9 @@ public class TemplateController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{id}/question")
-    @Operation(summary = "템플릿에서 질문 조회", description = "템플릿 id로 질문 리스트 조회")
-    public List<QuestionResponse> getQuestions(@PathVariable Long id) {
-        return templateService.findQuestions(id);
+    @GetMapping("/tag")
+    @Operation(summary = "모든 태그 조회", description = "저장되어 있는 모든 태그를 조회한다.")
+    public List<String> findAllTag() {
+        return templateService.findAllTags();
     }
 }
