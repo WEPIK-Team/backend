@@ -26,11 +26,11 @@ public class ResultService {
     public ResultResponse loadResult(String senderUUID, String receiverUUID) {
 
         //sender
-        Result senderResult = resultRepository.findResultById(senderUUID);
+        Result senderResult = resultRepository.findResultBySenderId(senderUUID);
         List<ResultAnswerDto> senderResultAnswerDto = toAnswerDto(senderResult);
 
         //receiver
-        Result receiverResult = resultRepository.findResultById(receiverUUID);
+        Result receiverResult = resultRepository.findResultByReceiverId(receiverUUID);
         List<ResultAnswerDto> receiverResultAnswerDto = toAnswerDto(receiverResult);
 
         return ResultResponse.builder()

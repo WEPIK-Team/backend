@@ -11,6 +11,7 @@ import wepik.backend.module.question.dao.QuestionRepository;
 import wepik.backend.module.result.dao.Answer;
 import wepik.backend.module.result.dao.AnswerRepository;
 import wepik.backend.module.result.dao.Result;
+import wepik.backend.module.result.dao.ResultRepository;
 import wepik.backend.module.result.dto.AnswerDto;
 import wepik.backend.module.result.dto.AnswerRequest;
 import wepik.backend.module.result.dto.AnswerResponse;
@@ -24,25 +25,42 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
     private final TemplateRepository templateRepository;
+    private final ResultRepository resultRepository;
+
     @Transactional
     public AnswerResponse saveAnswer(AnswerRequest answerRequest) {
         Template template = templateRepository.findById(answerRequest.getTemplateId())
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_TEMPLATE));
 
-        Result result = Result.builder()
-                .id(answerRequest.getUuid())
-                .template(template)
-                .build();
+        Result result;
+        AnswerResponse answerResponse;
+
+        //최조 요청
+        if (answerRequest.getUuid() == null) {
+            result = Result.builder()
+                    .senderId(UUID.randomUUID().toString())
+                    .receiverId(UUID.randomUUID().toString())
+                    .template(template)
+                    .build();
+
+            answerResponse = AnswerResponse.builder()
+                    .receiverId(result.getReceiverId())
+                    .build();
+        } else {
+            result = resultRepository.findResultByReceiverId(answerRequest.getUuid());
+
+            answerResponse = AnswerResponse.builder()
+                    .senderId(result.getSenderId())
+                    .receiverId(result.getReceiverId())
+                    .build();
+        }
 
         List<Answer> answers = toAnswers(answerRequest.getAnswerDtos(), result);
         result.addAnswers(answers);
 
         answerRepository.saveAll(answers);
 
-        return AnswerResponse.builder()
-                .target("receiver")
-                .uuid(UUID.randomUUID().toString())
-                .build();
+        return answerResponse;
     }
 
     private List<Answer> toAnswers(List<AnswerDto> answerDtos, Result result) {

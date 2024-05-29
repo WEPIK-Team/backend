@@ -19,7 +19,8 @@ public enum ErrorCode {
     NOT_FOUND_QUESTION(NOT_FOUND, "질문을 찾을 수 없습니다."),
     NOT_FOUND_TEMPLATE(NOT_FOUND, "템플릿을 찾을 수 없습니다."),
     NOT_FOUND_EMAIL(NOT_FOUND, "이메일을 찾을 수 없습니다."),
-    NOT_FOUND_FILE(NOT_FOUND, "이미지를 찾을 수 없습니다.");
+    NOT_FOUND_FILE(NOT_FOUND, "이미지를 찾을 수 없습니다."),
+    NOT_FOUND_ANSWER(NOT_FOUND, "답변을 찾을 수 없습니다.");
 
 
 

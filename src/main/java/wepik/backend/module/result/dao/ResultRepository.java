@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ResultRepository extends JpaRepository<Result, String> {
 
-    Result findResultById(String answerId);
+    Result findResultBySenderId(String answerId);
+
+    Result findResultByReceiverId(String receiverId);
 }
