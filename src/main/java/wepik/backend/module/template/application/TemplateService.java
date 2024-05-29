@@ -1,5 +1,6 @@
 package wepik.backend.module.template.application;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.PrimitiveIterator;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import wepik.backend.module.template.dao.TagRepository;
 import wepik.backend.module.template.dao.Template;
 import wepik.backend.module.template.dao.TemplateRepository;
 import wepik.backend.module.template.dao.TemplateTag;
+import wepik.backend.module.template.dto.TemplateCreateRequest;
 import wepik.backend.module.template.dto.TemplateListResponse;
 import wepik.backend.module.template.dto.TemplateRequest;
 import wepik.backend.module.template.dto.TemplateResponse;
@@ -36,24 +38,30 @@ public class TemplateService {
     private final TagRepository tagRepository;
     private final FileRepository fileRepository;
 
-    public TemplateResponse save(final TemplateRequest request) {
+    public TemplateResponse save(final TemplateCreateRequest request) {
         File file = fileRepository.findByStoredName(request.getStoredName())
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_FILE));
 
-        List<File> questionFiles = getQuestionFiles(request);
-        Template template = request.toEntity(file, questionFiles);
+        List<Question> questions = questionRepository.findQuestionByIdIn(request.getQuestions());
+        List<Tag> tags = tagRepository.findByNameIn(request.getTags());
 
-        List<TemplateTag> templateTags = template.getTemplateTags();
-        for (TemplateTag templateTag : templateTags) {
-            templateTag.addTemplate(template);
+        Template template = Template.builder()
+                .title(request.getTitle())
+                .file(file)
+                .questions(new ArrayList<>(questions))
+                .templateTags(new ArrayList<>())
+                .build();
+
+        for (Tag tag : tags) {
+            TemplateTag templateTag = TemplateTag.builder()
+                    .tag(tag)
+                    .template(template)
+                    .build();
+
+            template.addTemplateTag(templateTag);
         }
 
-        List<Question> questions = template.getQuestions();
-        for (Question question : questions) {
-            question.addQuestions(template);
-        }
         Template saveTemplate = templateRepository.save(template);
-        questionRepository.saveAll(questions);
         return TemplateResponse.fromEntity(saveTemplate);
     }
 
@@ -81,13 +89,13 @@ public class TemplateService {
         return tagRepository.findAll().stream().map(Tag::getName).collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
-    public List<File> getQuestionFiles(final TemplateRequest request) {
-        return fileRepository.findAllByStoredNameIn(
-                request.getQuestions().stream()
-                        .map(QuestionRequest::getStoredName)
-                        .filter(Objects::nonNull)
-                        .collect(Collectors.toList())
-        );
-    }
+//    @Transactional(readOnly = true)
+//    public List<File> getQuestionFiles(final TemplateCreateRequest request) {
+//        return fileRepository.findAllByStoredNameIn(
+//                request.getQuestions().stream()
+//                        .map(QuestionRequest::getStoredName)
+//                        .filter(Objects::nonNull)
+//                        .collect(Collectors.toList())
+//        );
+//    }
 }

@@ -49,4 +49,5 @@ public class Question extends BaseTimeEntity {
     public void addQuestions(Template template) {
         this.template = template;
     }
+
 }
