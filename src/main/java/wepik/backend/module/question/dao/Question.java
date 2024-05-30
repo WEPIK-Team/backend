@@ -43,11 +43,6 @@ public class Question extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<SelectQuestion> selectQuestions = new ArrayList<>();
-
-    public void addQuestions(Template template) {
-        this.template = template;
-    }
-
 }

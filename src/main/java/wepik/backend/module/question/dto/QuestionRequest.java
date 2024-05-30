@@ -8,6 +8,10 @@ import wepik.backend.module.file.dao.File;
 import wepik.backend.module.question.dao.AnswerType;
 import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.question.dao.Question.QuestionBuilder;
+import wepik.backend.module.question.dao.SelectQuestion;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -23,13 +27,22 @@ public class QuestionRequest {
     @Schema(description = "DB에 저장되는 이미지 이름", example = "4df23447-2355-45h2-8783-7f6gd2ceb848_고양이.jpg")
     private String storedName;
 
+    private List<SelectRequest> selectQuestions;
+
     public Question toEntity(File file) {
         QuestionBuilder builder = Question.builder()
                 .title(title)
-                .type(type);
+                .type(type)
+                .selectQuestions(getSelectedQuestion(selectQuestions));
         if (file != null) {
             builder.file(file);
         }
         return builder.build();
+    }
+
+    private List<SelectQuestion> getSelectedQuestion(List<SelectRequest> requests) {
+        return requests.stream()
+                .map(SelectRequest::toEntity)
+                .collect(Collectors.toList());
     }
 }
