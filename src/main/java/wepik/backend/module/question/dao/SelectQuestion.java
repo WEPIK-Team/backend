@@ -1,5 +1,6 @@
 package wepik.backend.module.question.dao;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,6 +23,9 @@ public class SelectQuestion {
 
     @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
+    private int selectSequence;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
