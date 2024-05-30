@@ -19,4 +19,7 @@ public class AnswerDto {
 
     @Schema(description = "질문 id", example = "1")
     private Long questionId;
+
+    @Schema(description = "답변 순서", example = "1")
+    private int sequence;
 }

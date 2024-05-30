@@ -24,7 +24,12 @@ public class Answer extends BaseTimeEntity {
     private Long id;
 
     @NotNull
+    @Column(name = "content")
     private String content;
+
+    @NotNull
+    @Column(name = "sequence")
+    private int sequence;
 
     @NotNull
     @Enumerated(EnumType.STRING)

@@ -23,16 +23,14 @@ import wepik.backend.module.template.dao.Template;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Result {
 
-    @Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "sender_id")
+    @Id
+    @Column(name = "target_id")
     @JdbcType(VarcharJdbcType.class)
-    private String senderId;
+    private String targetId;
 
-    @Column(name = "receiver_id")
+    @Column(name = "source_id")
     @JdbcType(VarcharJdbcType.class)
-    private String receiverId;
+    private String sourceId;
 
     @OneToMany(mappedBy = "result")
     @Builder.Default

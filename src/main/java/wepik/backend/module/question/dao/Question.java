@@ -29,9 +29,6 @@ public class Question extends BaseTimeEntity {
     @Column(nullable = false)
     private AnswerType type;
 
-    @Column(nullable = true)
-    private Integer questionSequence;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "file_id")
     private File file;

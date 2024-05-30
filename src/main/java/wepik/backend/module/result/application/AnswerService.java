@@ -40,21 +40,27 @@ public class AnswerService {
         //최조 요청
         if (answerRequest.getUuid() == null) {
             result = Result.builder()
-                    .senderId(UUID.randomUUID().toString())
-                    .receiverId(UUID.randomUUID().toString())
+                    .targetId(UUID.randomUUID().toString())
+                    .sourceId(UUID.randomUUID().toString())
                     .template(template)
                     .build();
 
             answerResponse = AnswerResponse.builder()
-                    .receiverId(result.getReceiverId())
+                    .receiverId(result.getSourceId())
                     .build();
         } else {
             log.info("응답자 UUID={}", answerRequest.getUuid());
-            result = resultRepository.findResultByReceiverId(answerRequest.getUuid());
+            String targetId = resultRepository.findTargetIdBySourceId(answerRequest.getUuid());
+
+            result = Result.builder()
+                    .targetId(answerRequest.getUuid())
+                    .sourceId(targetId)
+                    .template(template)
+                    .build();
 
             answerResponse = AnswerResponse.builder()
-                    .senderId(result.getSenderId())
-                    .receiverId(result.getReceiverId())
+                    .senderId(targetId)
+                    .receiverId(answerRequest.getUuid())
                     .build();
         }
 
@@ -62,7 +68,6 @@ public class AnswerService {
         result.addAnswers(answers);
 
         answerRepository.saveAll(answers);
-
         return answerResponse;
     }
 
@@ -71,6 +76,7 @@ public class AnswerService {
                 .map(answerDto -> Answer.builder()
                         .content(answerDto.getContent())
                         .type(answerDto.getType())
+                        .sequence(answerDto.getSequence())
                         .question(questionRepository.findById(answerDto.getQuestionId())
                                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_QUESTION)))
                         .result(result)
