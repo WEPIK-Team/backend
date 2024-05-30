@@ -59,6 +59,6 @@ public class TemplateService {
 
     @Transactional(readOnly = true)
     public List<String> findAllTags() {
-        return tagRepository.findAll().stream().map(Tag::getName).collect(Collectors.toList());
+        return tagRepository.findAllDistinctNames();
     }
 }
