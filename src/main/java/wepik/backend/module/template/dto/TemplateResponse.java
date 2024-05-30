@@ -9,10 +9,8 @@ import wepik.backend.module.file.dao.File;
 import wepik.backend.module.question.dto.QuestionResponse;
 import wepik.backend.module.template.dao.Tag;
 import wepik.backend.module.template.dao.Template;
-
 import java.util.List;
 import java.util.stream.Collectors;
-import wepik.backend.module.template.dao.TemplateTag;
 
 @Data
 @Builder
@@ -47,15 +45,16 @@ public class TemplateResponse {
                 .build();
     }
 
-    private static List<String> getTemplateTags(Template template) {
+    public static List<String> getTemplateTags(Template template) {
         return template.getTemplateTags().stream()
                 .map(templateTag -> templateTag.getTag().getName())
                 .collect(Collectors.toList());
     }
 
     private static List<QuestionResponse> getQuestions(Template template) {
-        return template.getQuestions().stream()
-                .map(QuestionResponse::fromEntity)
+        return template.getTemplateQuestions().stream()
+                .map(templateQuestion -> QuestionResponse.fromEntity(templateQuestion.getQuestion()))
                 .collect(Collectors.toList());
     }
+
 }

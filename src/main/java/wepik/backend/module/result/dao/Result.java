@@ -24,9 +24,13 @@ import wepik.backend.module.template.dao.Template;
 public class Result {
 
     @Id
-    @Column(name = "result_id")
+    @Column(name = "target_id")
     @JdbcType(VarcharJdbcType.class)
-    private String id;
+    private String targetId;
+
+    @Column(name = "source_id")
+    @JdbcType(VarcharJdbcType.class)
+    private String sourceId;
 
     @OneToMany(mappedBy = "result")
     @Builder.Default

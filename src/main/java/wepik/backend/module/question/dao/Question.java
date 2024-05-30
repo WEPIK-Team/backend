@@ -1,14 +1,13 @@
 package wepik.backend.module.question.dao;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 import wepik.backend.global.common.BaseTimeEntity;
 import wepik.backend.module.file.dao.File;
 import wepik.backend.module.member.dao.Member;
-import wepik.backend.module.template.dao.Template;
+import wepik.backend.module.template.dao.TemplateQuestion;
 
 @Entity
 @Getter
@@ -28,13 +27,6 @@ public class Question extends BaseTimeEntity {
     @Column(nullable = false)
     private AnswerType type;
 
-    @Column(nullable = true)
-    private Integer questionSequence;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "template_id")
-    private Template template;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "file_id")
     private File file;
@@ -43,10 +35,9 @@ public class Question extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<SelectQuestion> selectQuestions = new ArrayList<>();
 
-    public void addQuestions(Template template) {
-        this.template = template;
-    }
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TemplateQuestion> templateQuestions = new ArrayList<>();
 }

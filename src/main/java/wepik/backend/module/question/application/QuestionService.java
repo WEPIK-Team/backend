@@ -10,6 +10,7 @@ import wepik.backend.module.file.dao.File;
 import wepik.backend.module.file.dao.FileRepository;
 import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.question.dao.QuestionRepository;
+import wepik.backend.module.question.dao.SelectQuestion;
 import wepik.backend.module.question.dto.QuestionRequest;
 import wepik.backend.module.question.dto.QuestionResponse;
 import java.util.List;
@@ -23,11 +24,14 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final FileRepository fileRepository;
     public QuestionResponse save(final QuestionRequest questionRequest) {
-
         File file = fileRepository.findByStoredName(questionRequest.getStoredName())
                 .orElse(null);
-
         Question question = questionRequest.toEntity(file);
+
+        List<SelectQuestion> selectQuestions = question.getSelectQuestions();
+        for (SelectQuestion selectQuestion : selectQuestions) {
+            selectQuestion.addSelectedQuestion(question);
+        }
         return QuestionResponse.fromEntity(questionRepository.save(question));
     }
 
@@ -35,7 +39,6 @@ public class QuestionService {
     public QuestionResponse findQuestion(final Long questionId) {
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_QUESTION));
-
         return QuestionResponse.fromEntity(question);
     }
 

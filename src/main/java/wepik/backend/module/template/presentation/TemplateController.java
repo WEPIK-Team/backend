@@ -5,12 +5,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import wepik.backend.module.question.dto.QuestionResponse;
 import wepik.backend.module.template.application.TemplateService;
 import wepik.backend.module.template.dto.TemplateListResponse;
 import wepik.backend.module.template.dto.TemplateRequest;
 import wepik.backend.module.template.dto.TemplateResponse;
-
 import java.util.List;
 
 @RestController

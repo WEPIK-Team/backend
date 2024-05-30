@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import wepik.backend.module.template.dao.Tag;
 import wepik.backend.module.template.dao.TemplateTag;
-
 @Data
 @Builder
 @AllArgsConstructor

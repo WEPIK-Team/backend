@@ -4,11 +4,13 @@ import static wepik.backend.module.question.dao.AnswerType.*;
 
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import wepik.backend.module.result.dao.Answer;
+import wepik.backend.module.result.dao.AnswerRepository;
 import wepik.backend.module.result.dao.Result;
 import wepik.backend.module.result.dao.ResultRepository;
 import wepik.backend.module.result.dto.ResultAnswerDto;
@@ -22,15 +24,16 @@ import wepik.backend.module.question.dao.SelectQuestion;
 public class ResultService {
 
     private final ResultRepository resultRepository;
+    private final AnswerRepository answerRepository;
 
     public ResultResponse loadResult(String senderUUID, String receiverUUID) {
 
         //sender
-        Result senderResult = resultRepository.findResultById(senderUUID);
+        Result senderResult = resultRepository.findResultByTargetId(senderUUID);
         List<ResultAnswerDto> senderResultAnswerDto = toAnswerDto(senderResult);
 
         //receiver
-        Result receiverResult = resultRepository.findResultById(receiverUUID);
+        Result receiverResult = resultRepository.findResultByTargetId(receiverUUID);
         List<ResultAnswerDto> receiverResultAnswerDto = toAnswerDto(receiverResult);
 
         return ResultResponse.builder()
@@ -40,14 +43,12 @@ public class ResultService {
                 .build();
     }
 
-    protected List<ResultAnswerDto> toAnswerDto(Result senderResult) {
-        List<Answer> sortedAnswers = senderResult.getAnswers().stream()
-                .sorted(Comparator.comparingInt(a -> a.getQuestion().getQuestionSequence()))
-                .toList();
+    protected List<ResultAnswerDto> toAnswerDto(Result result) {
+        List<Answer> answers = answerRepository.findAnswerByResultIdOrderBySequence(result.getTargetId());
 
-        List<ResultAnswerDto> resultAnswerDtos = sortedAnswers.stream()
+        List<ResultAnswerDto> resultAnswerDtos = answers.stream()
                 .map(answer -> ResultAnswerDto.builder()
-                        .sequence(answer.getQuestion().getQuestionSequence())
+                        .sequence(answer.getSequence())
                         .title(answer.getQuestion().getTitle())
                         .type(answer.getType())
                         .answer(answer.getContent())

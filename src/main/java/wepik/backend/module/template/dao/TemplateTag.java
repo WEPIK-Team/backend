@@ -2,7 +2,6 @@ package wepik.backend.module.template.dao;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 @Entity
 @Getter
 @Builder
