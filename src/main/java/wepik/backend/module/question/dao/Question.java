@@ -8,7 +8,6 @@ import lombok.*;
 import wepik.backend.global.common.BaseTimeEntity;
 import wepik.backend.module.file.dao.File;
 import wepik.backend.module.member.dao.Member;
-import wepik.backend.module.template.dao.Template;
 import wepik.backend.module.template.dao.TemplateQuestion;
 
 @Entity
@@ -28,9 +27,6 @@ public class Question extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AnswerType type;
-
-    @Column(nullable = true)
-    private Integer questionSequence;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "file_id")

@@ -54,12 +54,12 @@ public class Template extends BaseTimeEntity {
 
     // 연관관계 편의 메서드
     public void addTemplateTag(TemplateTag templateTag) {
-        templateTags.add(templateTag);
+        this.templateTags.add(templateTag);
         templateTag.addTemplate(this);
     }
 
     public void addTemplateQuestion(TemplateQuestion templateQuestion) {
-        templateQuestions.add(templateQuestion);
-        templateQuestion.setTemplate(this);
+        this.templateQuestions.add(templateQuestion);
+        templateQuestion.addTemplate(this);
     }
 }

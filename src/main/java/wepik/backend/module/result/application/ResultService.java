@@ -4,6 +4,7 @@ import static wepik.backend.module.question.dao.AnswerType.*;
 
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -41,22 +42,23 @@ public class ResultService {
     }
 
     protected List<ResultAnswerDto> toAnswerDto(Result senderResult) {
-        List<Answer> sortedAnswers = senderResult.getAnswers().stream()
-                .sorted(Comparator.comparingInt(a -> a.getQuestion().getQuestionSequence()))
-                .toList();
-
-        List<ResultAnswerDto> resultAnswerDtos = sortedAnswers.stream()
-                .map(answer -> ResultAnswerDto.builder()
-                        .sequence(answer.getQuestion().getQuestionSequence())
-                        .title(answer.getQuestion().getTitle())
-                        .type(answer.getType())
-                        .answer(answer.getContent())
-                        .imgPath(answer.getQuestion().getFile() != null ? answer.getQuestion().getFile().getPath() : null)
-                        .selectQuestionDtos(answer.getQuestion().getType() == SELECT ? toSelectQuestionDto(answer.getQuestion().getSelectQuestions()) : null)
-                        .build())
-                .toList();
-
-        return resultAnswerDtos;
+//        List<Answer> sortedAnswers = senderResult.getAnswers().stream()
+//                .sorted(Comparator.comparingInt(a -> a.getQuestion().getQuestionSequence()))
+//                .toList();
+//
+//        List<ResultAnswerDto> resultAnswerDtos = sortedAnswers.stream()
+//                .map(answer -> ResultAnswerDto.builder()
+//                        .sequence(answer.getQuestion().getQuestionSequence())
+//                        .title(answer.getQuestion().getTitle())
+//                        .type(answer.getType())
+//                        .answer(answer.getContent())
+//                        .imgPath(answer.getQuestion().getFile() != null ? answer.getQuestion().getFile().getPath() : null)
+//                        .selectQuestionDtos(answer.getQuestion().getType() == SELECT ? toSelectQuestionDto(answer.getQuestion().getSelectQuestions()) : null)
+//                        .build())
+//                .toList();
+//
+//        return resultAnswerDtos;
+        return Collections.emptyList();
     }
 
     protected List<SelectQuestionDto> toSelectQuestionDto(List<SelectQuestion> selectQuestions) {
