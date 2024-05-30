@@ -10,6 +10,8 @@ import wepik.backend.module.template.dao.Template;
 import wepik.backend.module.template.dao.TemplateQuestion;
 import wepik.backend.module.template.dao.TemplateTag;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Data
@@ -47,6 +49,7 @@ public class TemplateRequest {
         }
         return template;
     }
+  
     private List<TemplateTag> getTemplateTags() {
         return tags.stream()
                 .map(TemplateTagDto::toEntity)

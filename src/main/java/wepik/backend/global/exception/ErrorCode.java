@@ -22,8 +22,6 @@ public enum ErrorCode {
     NOT_FOUND_FILE(NOT_FOUND, "이미지를 찾을 수 없습니다."),
     NOT_FOUND_ANSWER(NOT_FOUND, "답변을 찾을 수 없습니다.");
 
-
-
     private final HttpStatus httpStatus;
     private final String message;
 }

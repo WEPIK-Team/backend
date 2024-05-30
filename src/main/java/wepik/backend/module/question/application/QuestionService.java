@@ -32,7 +32,6 @@ public class QuestionService {
         for (SelectQuestion selectQuestion : selectQuestions) {
             selectQuestion.addSelectedQuestion(question);
         }
-
         return QuestionResponse.fromEntity(questionRepository.save(question));
     }
 

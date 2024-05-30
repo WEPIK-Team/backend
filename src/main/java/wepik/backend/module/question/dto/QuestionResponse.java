@@ -7,7 +7,6 @@ import lombok.Data;
 import wepik.backend.module.file.dao.File;
 import wepik.backend.module.question.dao.AnswerType;
 import wepik.backend.module.question.dao.Question;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,9 +32,11 @@ public class QuestionResponse {
 
     public static QuestionResponse fromEntity(Question question) {
         File file = question.getFile();
+
         List<SelectResponse> selectResponses = question.getSelectQuestions().stream()
                 .map(SelectResponse::fromEntity)
                 .collect(Collectors.toList());
+
         return QuestionResponse.builder()
                 .id(question.getId())
                 .title(question.getTitle())
@@ -44,4 +45,7 @@ public class QuestionResponse {
                 .selectQuestions(selectResponses)
                 .build();
     }
+
+
+
 }

@@ -1,7 +1,6 @@
 package wepik.backend.module.question.dao;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;

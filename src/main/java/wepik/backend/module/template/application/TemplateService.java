@@ -45,6 +45,7 @@ public class TemplateService {
     @Transactional(readOnly = true)
     public List<TemplateListResponse> findTemplates() {
         List<Template> templates = templateRepository.findAll();
+
         return templates.stream()
                 .map(template -> TemplateListResponse.fromEntity(template))
                 .collect(Collectors.toList());

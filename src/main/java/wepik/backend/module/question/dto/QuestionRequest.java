@@ -9,7 +9,6 @@ import wepik.backend.module.question.dao.AnswerType;
 import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.question.dao.Question.QuestionBuilder;
 import wepik.backend.module.question.dao.SelectQuestion;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +33,7 @@ public class QuestionRequest {
                 .title(title)
                 .type(type)
                 .selectQuestions(getSelectedQuestion(selectQuestions));
+
         if (file != null) {
             builder.file(file);
         }

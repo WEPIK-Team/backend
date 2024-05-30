@@ -25,10 +25,12 @@ public class TemplateListResponse {
     @Schema(description = "이미지 URL", example = "https://wepik-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/1a5de0ff-7948-4ca1-8979-15701385f778_programmers.jpeg")
     private String imageURL;
 
+
     private List<String> templateTags;
 
     public static TemplateListResponse fromEntity(Template template) {
         File file = template.getFile();
+
         return TemplateListResponse.builder()
                 .id(template.getId())
                 .title(template.getTitle())
