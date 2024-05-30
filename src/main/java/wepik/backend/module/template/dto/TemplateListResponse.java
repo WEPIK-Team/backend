@@ -24,7 +24,7 @@ public class TemplateListResponse {
     @Schema(description = "사용된 횟수", example = "23")
     private int useCount;
 
-    @Schema(description = "템플릿 썸네일", example = "아직 null")
+    @Schema(description = "템플릿 썸네일", example = "4df23447-2355-45h2-8783-7f6gd2ceb848_고양이.jpg")
     private File file;
 
     private List<String> templateTags;
