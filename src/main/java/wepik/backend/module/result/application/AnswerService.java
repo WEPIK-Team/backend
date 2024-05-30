@@ -12,12 +12,12 @@ import wepik.backend.module.question.dao.QuestionRepository;
 import wepik.backend.module.result.dao.Answer;
 import wepik.backend.module.result.dao.AnswerRepository;
 import wepik.backend.module.result.dao.Result;
+import wepik.backend.module.result.dao.ResultRepository;
 import wepik.backend.module.result.dto.AnswerDto;
 import wepik.backend.module.result.dto.AnswerRequest;
 import wepik.backend.module.result.dto.AnswerResponse;
 import wepik.backend.module.template.dao.Template;
 import wepik.backend.module.template.dao.TemplateRepository;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
