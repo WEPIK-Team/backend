@@ -6,14 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import wepik.backend.module.file.dao.File;
 import wepik.backend.module.question.dao.Question;
-import wepik.backend.module.question.dto.QuestionRequest;
 import wepik.backend.module.template.dao.Template;
 import wepik.backend.module.template.dao.TemplateQuestion;
 import wepik.backend.module.template.dao.TemplateTag;
-
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Data
@@ -29,44 +25,31 @@ public class TemplateRequest {
 
     private List<String> tags;
 
-    private List<QuestionRequest> questions;
+    private List<Long> questionIds;
 
-    public Template toEntity(File file, List<File> files) {
-        List<Question> questionEntities = getQuestions(files);
-        List<TemplateQuestion> templateQuestions = questionEntities.stream()
-                .map(question -> TemplateQuestion.builder()
-                        .template(null) // Template 객체를 나중에 설정합니다.
-                        .question(question)
-                        .build())
-                .collect(Collectors.toList());
-
+    public Template toEntity(File file, List<Question> questions) {
         Template template = Template.builder()
                 .title(title)
                 .file(file)
-                .templateTags(getTemplateTags())
-                .templateQuestions(templateQuestions)
                 .build();
 
-        // Template 객체 설정
-        templateQuestions.forEach(tq -> tq.setTemplate(template));
+        List<TemplateTag> tags = getTemplateTags();
+        for (TemplateTag tag : tags) {
+            template.addTemplateTag(tag);
+        }
 
+        for (Question question : questions) {
+            template.addTemplateQuestion(TemplateQuestion.builder()
+                    .question(question)
+                    .template(template)
+                    .build()
+            );
+        }
         return template;
     }
-
     private List<TemplateTag> getTemplateTags() {
         return tags.stream()
                 .map(TemplateTagDto::toEntity)
-                .collect(Collectors.toList());
-    }
-
-    private List<Question> getQuestions(List<File> files) {
-        Map<String, File> fileMap = files.stream()
-                .collect(Collectors.toMap(File::getStoredName, Function.identity()));
-        return questions.stream()
-                .map(question -> {
-                    File questionFile = fileMap.get(question.getStoredName());
-                    return question.toEntity(questionFile);
-                })
                 .collect(Collectors.toList());
     }
 }

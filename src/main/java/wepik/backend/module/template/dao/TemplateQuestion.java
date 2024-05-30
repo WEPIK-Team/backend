@@ -5,11 +5,9 @@ import lombok.*;
 import wepik.backend.module.question.dao.Question;
 
 @Entity
-@Getter
-@Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "template_question")
 public class TemplateQuestion {
 
@@ -25,5 +23,11 @@ public class TemplateQuestion {
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)
     private Question question;
+    public void addTemplate(Template template) {
+        this.template = template;
+    }
+    public Question getQuestion() {
+        return question;
+    }
 }
 

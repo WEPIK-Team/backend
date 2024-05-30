@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
-
 @Entity
 @Getter
 @Builder
@@ -23,9 +22,6 @@ public class SelectQuestion {
 
     @Column(nullable = false)
     private String title;
-
-    @Column(nullable = false)
-    private int selectSequence;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")

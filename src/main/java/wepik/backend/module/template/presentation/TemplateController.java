@@ -5,13 +5,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import wepik.backend.module.question.dto.QuestionResponse;
 import wepik.backend.module.template.application.TemplateService;
-import wepik.backend.module.template.dto.TemplateCreateRequest;
 import wepik.backend.module.template.dto.TemplateListResponse;
 import wepik.backend.module.template.dto.TemplateRequest;
 import wepik.backend.module.template.dto.TemplateResponse;
-
 import java.util.List;
 
 @RestController
@@ -25,7 +22,7 @@ public class TemplateController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     @Operation(summary = "템플릿 생성", description = "템플릿을 생성한다")
-    public TemplateResponse createTemplate(@RequestBody TemplateCreateRequest templateRequest) {
+    public TemplateResponse createTemplate(@RequestBody TemplateRequest templateRequest) {
         return templateService.save(templateRequest);
     }
 

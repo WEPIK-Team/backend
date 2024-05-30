@@ -4,6 +4,7 @@ import static wepik.backend.module.question.dao.AnswerType.*;
 
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

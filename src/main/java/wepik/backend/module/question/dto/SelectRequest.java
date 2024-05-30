@@ -15,7 +15,6 @@ public class SelectRequest {
 
     @Schema(description = "Selected 제목", example = "셋 중에 더 드랍하고 싶은 강의는?")
     private String title;
-
     public SelectQuestion toEntity() {
         return SelectQuestion.builder()
                 .title(title)
