@@ -36,15 +36,19 @@ public class Template extends BaseTimeEntity {
     @JoinColumn(name = "file_id", nullable = false)
     private File file;
 
+    @Builder.Default
     @OneToMany(mappedBy = "template", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Question> questions = new ArrayList<>();
+    private List<TemplateQuestion> templateQuestions = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "template", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TemplateTag> templateTags = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "template")
     private List<MemTempMapping> memTempMappings = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "template")
     private List<Result> results = new ArrayList<>();
 
@@ -52,5 +56,10 @@ public class Template extends BaseTimeEntity {
     public void addTemplateTag(TemplateTag templateTag) {
         templateTags.add(templateTag);
         templateTag.addTemplate(this);
+    }
+
+    public void addTemplateQuestion(TemplateQuestion templateQuestion) {
+        templateQuestions.add(templateQuestion);
+        templateQuestion.setTemplate(this);
     }
 }

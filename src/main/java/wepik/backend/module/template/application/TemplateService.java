@@ -18,6 +18,7 @@ import wepik.backend.module.question.dto.QuestionResponse;
 import wepik.backend.module.template.dao.Tag;
 import wepik.backend.module.template.dao.TagRepository;
 import wepik.backend.module.template.dao.Template;
+import wepik.backend.module.template.dao.TemplateQuestion;
 import wepik.backend.module.template.dao.TemplateRepository;
 import wepik.backend.module.template.dao.TemplateTag;
 import wepik.backend.module.template.dto.TemplateCreateRequest;
@@ -48,8 +49,6 @@ public class TemplateService {
         Template template = Template.builder()
                 .title(request.getTitle())
                 .file(file)
-                .questions(new ArrayList<>(questions))
-                .templateTags(new ArrayList<>())
                 .build();
 
         for (Tag tag : tags) {
@@ -61,9 +60,20 @@ public class TemplateService {
             template.addTemplateTag(templateTag);
         }
 
-        Template saveTemplate = templateRepository.save(template);
-        return TemplateResponse.fromEntity(saveTemplate);
+        for (Question question : questions) {
+            TemplateQuestion templateQuestion = TemplateQuestion.builder()
+                    .template(template)
+                    .question(question)
+                    .build();
+
+            template.addTemplateQuestion(templateQuestion);
+            question.getTemplateQuestions().add(templateQuestion);
+        }
+
+        Template savedTemplate = templateRepository.save(template);
+        return TemplateResponse.fromEntity(savedTemplate);
     }
+
 
     @Transactional(readOnly = true)
     public TemplateResponse findTemplateById(final Long templateId) {

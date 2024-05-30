@@ -54,8 +54,9 @@ public class TemplateResponse {
     }
 
     private static List<QuestionResponse> getQuestions(Template template) {
-        return template.getQuestions().stream()
-                .map(QuestionResponse::fromEntity)
+        return template.getTemplateQuestions().stream()
+                .map(templateQuestion -> QuestionResponse.fromEntity(templateQuestion.getQuestion()))
                 .collect(Collectors.toList());
     }
+
 }

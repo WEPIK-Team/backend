@@ -3,6 +3,7 @@ package wepik.backend.module.result.application;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wepik.backend.global.exception.ErrorCode;
@@ -20,6 +21,7 @@ import wepik.backend.module.template.dao.TemplateRepository;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AnswerService {
 
     private final AnswerRepository answerRepository;
@@ -47,6 +49,7 @@ public class AnswerService {
                     .receiverId(result.getReceiverId())
                     .build();
         } else {
+            log.info("응답자 UUID={}", answerRequest.getUuid());
             result = resultRepository.findResultByReceiverId(answerRequest.getUuid());
 
             answerResponse = AnswerResponse.builder()

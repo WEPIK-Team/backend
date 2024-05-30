@@ -7,11 +7,10 @@ import lombok.Data;
 import wepik.backend.module.file.dao.File;
 import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.question.dto.QuestionRequest;
-import wepik.backend.module.question.dto.QuestionResponse;
 import wepik.backend.module.template.dao.Template;
+import wepik.backend.module.template.dao.TemplateQuestion;
 import wepik.backend.module.template.dao.TemplateTag;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -32,14 +31,26 @@ public class TemplateRequest {
 
     private List<QuestionRequest> questions;
 
-
     public Template toEntity(File file, List<File> files) {
-        return Template.builder()
+        List<Question> questionEntities = getQuestions(files);
+        List<TemplateQuestion> templateQuestions = questionEntities.stream()
+                .map(question -> TemplateQuestion.builder()
+                        .template(null) // Template 객체를 나중에 설정합니다.
+                        .question(question)
+                        .build())
+                .collect(Collectors.toList());
+
+        Template template = Template.builder()
                 .title(title)
                 .file(file)
                 .templateTags(getTemplateTags())
-                .questions(getQuestions(files))
+                .templateQuestions(templateQuestions)
                 .build();
+
+        // Template 객체 설정
+        templateQuestions.forEach(tq -> tq.setTemplate(template));
+
+        return template;
     }
 
     private List<TemplateTag> getTemplateTags() {
@@ -48,15 +59,14 @@ public class TemplateRequest {
                 .collect(Collectors.toList());
     }
 
-    private List<Question> getQuestions (List<File> files) {
+    private List<Question> getQuestions(List<File> files) {
         Map<String, File> fileMap = files.stream()
                 .collect(Collectors.toMap(File::getStoredName, Function.identity()));
         return questions.stream()
                 .map(question -> {
-                    File file = fileMap.get(question.getStoredName());
-                    return question.toEntity(file);
+                    File questionFile = fileMap.get(question.getStoredName());
+                    return question.toEntity(questionFile);
                 })
                 .collect(Collectors.toList());
     }
-
 }
