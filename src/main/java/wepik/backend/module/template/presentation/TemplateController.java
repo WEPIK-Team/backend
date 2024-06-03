@@ -58,7 +58,13 @@ public class TemplateController {
     @GetMapping("/tag")
     @Operation(summary = "태그 검색 기능", description = "해당 태그에 일치하는 모든 템플릿을 조회한다.")
     public List<TemplateListResponse> findTemplatesByTag(@RequestParam String tagName) {
-        return templateService.findPostsByTag(tagName);
+        return templateService.findTemplatesByTag(tagName);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/popular")
+    @Operation(summary = "인기 템플릿 조회", description = "사용 횟수가 많은 템플릿을 우선 순위로 조회한다.")
+    public List<TemplateListResponse> findTemplatesByUseCount() {
+        return templateService.findTemplatesByUseCount();
+    }
 }

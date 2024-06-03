@@ -10,4 +10,7 @@ public interface TemplateRepository extends JpaRepository<Template, Long> {
             "JOIN tt.tag tg " +
             "WHERE tg.name = :tagName")
     List<Template> findsByTemplateTagsContaining(String tagName);
+
+    @Query("SELECT t FROM Template t ORDER BY t.useCount DESC")
+    List<Template> findAllOrderByUseCountDesc();
 }
