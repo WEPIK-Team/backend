@@ -48,10 +48,17 @@ public class TemplateController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/tag")
+    @GetMapping("/tags")
     @Operation(summary = "모든 태그 조회", description = "저장되어 있는 모든 태그를 조회한다.")
     public List<String> findAllTag() {
         return templateService.findAllTags();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/tag")
+    @Operation(summary = "태그 검색 기능", description = "해당 태그에 일치하는 모든 템플릿을 조회한다.")
+    public List<TemplateListResponse> findTemplatesByTag(@RequestParam String tagName) {
+        return templateService.findPostsByTag(tagName);
     }
 
 }

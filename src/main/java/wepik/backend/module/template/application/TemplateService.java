@@ -61,4 +61,12 @@ public class TemplateService {
     public List<String> findAllTags() {
         return tagRepository.findAllDistinctNames();
     }
+
+    @Transactional(readOnly = true)
+    public List<TemplateListResponse> findPostsByTag(String tagName) {
+        List<Template> templates = templateRepository.findsByTemplateTagsContaining(tagName);
+        return templates.stream()
+                .map(template -> TemplateListResponse.fromEntity(template))
+                .collect(Collectors.toList());
+    }
 }
