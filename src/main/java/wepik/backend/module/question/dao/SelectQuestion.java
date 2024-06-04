@@ -34,5 +34,4 @@ public class SelectQuestion {
     public void addSelectedQuestion(Question question) {
         this.question = question;
     }
-
 }

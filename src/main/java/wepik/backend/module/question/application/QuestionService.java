@@ -53,4 +53,19 @@ public class QuestionService {
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_QUESTION));
         questionRepository.deleteById(questionId);
     }
+
+    public void updateQuestion(final Long questionId, final QuestionRequest request) {
+        Question findQuestion = questionRepository.findById(questionId)
+                .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_QUESTION));
+        File file = fileRepository.findByStoredName(request.getStoredName())
+                .orElse(null);
+
+        findQuestion.getSelectQuestions().clear();
+
+        List<SelectQuestion> updatedSelectQuestions = QuestionRequest.getSelectedQuestion(request.getSelectQuestions());
+        for (SelectQuestion updatedSelectQuestion : updatedSelectQuestions) {
+            updatedSelectQuestion.addSelectedQuestion(findQuestion);
+        }
+        findQuestion.update(request.getTitle(), request.getType(), updatedSelectQuestions, file);
+    }
 }

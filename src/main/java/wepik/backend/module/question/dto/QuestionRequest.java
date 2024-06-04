@@ -40,7 +40,7 @@ public class QuestionRequest {
         return builder.build();
     }
 
-    private List<SelectQuestion> getSelectedQuestion(List<SelectRequest> requests) {
+    public static List<SelectQuestion> getSelectedQuestion(List<SelectRequest> requests) {
         return requests.stream()
                 .map(SelectRequest::toEntity)
                 .collect(Collectors.toList());
