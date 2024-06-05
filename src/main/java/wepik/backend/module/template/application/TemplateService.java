@@ -61,4 +61,21 @@ public class TemplateService {
     public List<String> findAllTags() {
         return tagRepository.findAllDistinctNames();
     }
+
+    @Transactional(readOnly = true)
+    public List<TemplateListResponse> findTemplatesByTag(String tagName) {
+        List<Template> templates = templateRepository.findsByTemplateTagsContaining(tagName);
+        return templates.stream()
+                .map(template -> TemplateListResponse.fromEntity(template))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<TemplateListResponse> findTemplatesByUseCount() {
+        List<Template> templates = templateRepository.findAllOrderByUseCountDesc();
+        return templates.stream()
+                .map(template -> TemplateListResponse.fromEntity(template))
+                .collect(Collectors.toList());
+
+    }
 }

@@ -42,7 +42,16 @@ public class QuestionController {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
     @Operation(summary = "질문 삭제", description = "id 값에 해당하는 질문을 삭제한다.")
-    public void deleteQuestion(@PathVariable Long id) {
+    public String deleteQuestion(@PathVariable Long id) {
         questionService.delete(id);
+        return "질문이 정상적으로 삭제되었습니다.";
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping("/{id}")
+    @Operation(summary = "질문 수정", description = "id 값에 해당하는 질문을 수정한다.")
+    public String updateQuestion(@PathVariable Long id, @RequestBody QuestionRequest questionRequest) {
+        questionService.updateQuestion(id , questionRequest);
+        return "질문이 정상적으로 수정되었습니다.";
     }
 }
