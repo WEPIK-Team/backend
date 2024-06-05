@@ -76,5 +76,6 @@ public class TemplateService {
         return templates.stream()
                 .map(template -> TemplateListResponse.fromEntity(template))
                 .collect(Collectors.toList());
+
     }
 }

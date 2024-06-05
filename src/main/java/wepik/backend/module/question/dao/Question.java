@@ -40,10 +40,12 @@ public class Question extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TemplateQuestion> templateQuestions = new ArrayList<>();
+  
     public void update(String title, AnswerType type, List<SelectQuestion> selectQuestions, File file) {
         this.title = title;
         this.type = type;
         this.selectQuestions.addAll(selectQuestions);
         this.file = file;
     }
+
 }
