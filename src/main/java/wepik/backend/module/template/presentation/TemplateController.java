@@ -54,6 +54,7 @@ public class TemplateController {
         templateService.updateTemplate(id, request);
         return "템플릿이 정상적으로 수정되었습니다.";
     }
+  
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/tags")
     @Operation(summary = "모든 태그 조회", description = "저장되어 있는 모든 태그를 조회한다.")
