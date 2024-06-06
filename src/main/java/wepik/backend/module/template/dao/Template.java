@@ -9,8 +9,6 @@ import wepik.backend.module.file.dao.File;
 import wepik.backend.module.result.dao.Result;
 import java.util.ArrayList;
 import java.util.List;
-
-
 @Entity
 @Getter
 @Builder
@@ -32,7 +30,7 @@ public class Template extends BaseTimeEntity {
     private int useCount;
 
     @OneToOne
-    @JoinColumn(name = "file_id", nullable = false)
+    @JoinColumn(name = "file_id" , nullable = false)
     private File file;
 
     @Builder.Default
@@ -50,15 +48,18 @@ public class Template extends BaseTimeEntity {
     @Builder.Default
     @OneToMany(mappedBy = "template")
     private List<Result> results = new ArrayList<>();
-
-    // 연관관계 편의 메서드
-    public void addTemplateTag(TemplateTag templateTag) {
+    public void setTemplateTag(TemplateTag templateTag) {
         this.templateTags.add(templateTag);
-        templateTag.addTemplate(this);
+        templateTag.setTemplate(this);
     }
-
-    public void addTemplateQuestion(TemplateQuestion templateQuestion) {
+    public void setTemplateQuestion(TemplateQuestion templateQuestion) {
         this.templateQuestions.add(templateQuestion);
-        templateQuestion.addTemplate(this);
+        templateQuestion.setTemplate(this);
+    }
+    public void update(String title, File file, List<TemplateQuestion> templateQuestion, List<TemplateTag> templateTags) {
+        this.title = title;
+        this.file = file;
+        this.templateQuestions.addAll(templateQuestion);
+        this.templateTags.addAll(templateTags);
     }
 }

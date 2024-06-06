@@ -18,7 +18,7 @@ public class Tag {
     @Column(name = "tag_name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "tag")
+    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TemplateTag> templateTags = new ArrayList<>();
 
 }
