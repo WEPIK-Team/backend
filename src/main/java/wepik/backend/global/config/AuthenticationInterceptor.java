@@ -15,10 +15,10 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         HttpSession session = request.getSession();
 
-        if (session.getAttribute("admin") == null) {
-            response.setStatus(401);
-            return false;
-        }
+//        if (session.getAttribute("admin") == null) {
+//            response.setStatus(401);
+//            return false;
+//        }
 
         return true;
     }
