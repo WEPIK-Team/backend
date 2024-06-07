@@ -9,7 +9,9 @@ import wepik.backend.module.question.dao.AnswerType;
 import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.question.dao.Question.QuestionBuilder;
 import wepik.backend.module.question.dao.SelectQuestion;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Data
@@ -41,7 +43,9 @@ public class QuestionRequest {
     }
 
     public static List<SelectQuestion> getSelectedQuestion(List<SelectRequest> requests) {
-        return requests.stream()
+        return Optional.ofNullable(requests)
+                .orElseGet(Collections::emptyList)
+                .stream()
                 .map(SelectRequest::toEntity)
                 .collect(Collectors.toList());
     }

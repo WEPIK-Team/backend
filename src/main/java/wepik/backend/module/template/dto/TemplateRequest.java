@@ -10,10 +10,7 @@ import wepik.backend.module.template.dao.Template;
 import wepik.backend.module.template.dao.TemplateQuestion;
 import wepik.backend.module.template.dao.TemplateTag;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -28,7 +25,6 @@ public class TemplateRequest {
     private List<String> tags;
 
     private List<Long> questionIds;
-
     public Template toEntity(File file, List<Question> questions) {
         Template template = Template.builder()
                 .title(title)
@@ -37,11 +33,11 @@ public class TemplateRequest {
 
         List<TemplateTag> tags = getTemplateTags();
         for (TemplateTag tag : tags) {
-            template.addTemplateTag(tag);
+            template.setTemplateTag(tag);
         }
 
         for (Question question : questions) {
-            template.addTemplateQuestion(TemplateQuestion.builder()
+            template.setTemplateQuestion(TemplateQuestion.builder()
                     .question(question)
                     .template(template)
                     .build()
