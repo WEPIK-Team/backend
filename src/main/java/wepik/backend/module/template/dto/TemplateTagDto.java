@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import wepik.backend.module.template.dao.Tag;
+import wepik.backend.module.template.dao.Template;
 import wepik.backend.module.template.dao.TemplateTag;
 @Data
 @Builder
@@ -14,15 +15,18 @@ public class TemplateTagDto {
     @Schema(description = "템플릿 태그", example = "사랑")
     private String tagName;
 
+    private Template template;
     public static TemplateTag toEntity(String tagName) {
+        Tag tag = Tag.builder().name(tagName).build();
         return TemplateTag.builder()
-                .tag(Tag.builder().name(tagName).build())
+                .tag(tag)
                 .build();
     }
-
-    public static TemplateTagDto fromEntity (TemplateTag templateTag) {
-        return TemplateTagDto.builder()
-                .tagName(templateTag.getTag().getName())
+    public static TemplateTag updateTags(String tagName, Template template) {
+        Tag tag = Tag.builder().name(tagName).build();
+        return TemplateTag.builder()
+                .tag(tag)
+                .template(template)
                 .build();
     }
 }

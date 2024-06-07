@@ -14,6 +14,8 @@ import wepik.backend.module.template.dao.*;
 import wepik.backend.module.template.dto.TemplateListResponse;
 import wepik.backend.module.template.dto.TemplateRequest;
 import wepik.backend.module.template.dto.TemplateResponse;
+import wepik.backend.module.template.dto.TemplateTagDto;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,5 +79,43 @@ public class TemplateService {
                 .map(template -> TemplateListResponse.fromEntity(template))
                 .collect(Collectors.toList());
 
+    }
+
+    public void updateTemplate(final Long templateId, final TemplateRequest request) {
+        Template template = templateRepository.findById(templateId)
+                .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_TEMPLATE));
+        File file = fileRepository.findByStoredName(request.getStoredName())
+                .orElseThrow(() -> new WepikException(ErrorCode.EMPTY_FILE_EXCEPTION));
+
+        List<TemplateQuestion> updatedQuestions = updateQuestion(template, request);
+        List<TemplateTag> updatedTags = updateTag(template, request);
+        template.update(request.getTitle(), file, updatedQuestions, updatedTags);
+    }
+
+    private List<TemplateQuestion> updateQuestion(Template template, TemplateRequest request) {
+        List<TemplateQuestion> templateQuestions = template.getTemplateQuestions();
+        for (TemplateQuestion templateQuestion : templateQuestions) {
+            templateQuestion.setTemplate(null);
+        }
+
+        List<Long> questionIds = request.getQuestionIds();
+        List<Question> questions = questionRepository.findQuestionByIdIn(questionIds);
+        return questions.stream()
+                .map(question -> TemplateQuestion.createTemplateQuestion(template, question))
+                .collect(Collectors.toList());
+    }
+
+    private List<TemplateTag> updateTag(Template template, TemplateRequest request) {
+        List<TemplateTag> templateTags = new ArrayList<>(template.getTemplateTags());
+        for (TemplateTag templateTag : templateTags) {
+            templateTag.setTemplate(null);
+        }
+
+        List<String> tags = request.getTags();
+        List<TemplateTag> updatedTags = new ArrayList<>();
+        for (String tagName : tags) {
+            updatedTags.add(TemplateTagDto.updateTags(tagName, template));
+        }
+        return updatedTags;
     }
 }

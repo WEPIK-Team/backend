@@ -21,7 +21,7 @@ public class TemplateTag {
     @JoinColumn(name = "tag_id")
     private Tag tag;
 
-    public void addTemplate(Template template) {
+    public void setTemplate(Template template) {
         this.template = template;
     }
 }

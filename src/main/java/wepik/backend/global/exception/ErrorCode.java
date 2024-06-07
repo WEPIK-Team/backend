@@ -15,6 +15,10 @@ public enum ErrorCode {
     MIME_TYPE_MISMATCH(BAD_REQUEST, "지원하지 않는 파일 형식입니다."),
     FILE_UPLOAD_FAILED(BAD_REQUEST, "파일 업로드에 실패했습니다."),
 
+    //401
+    UNAUTHORIZED_REQUEST(UNAUTHORIZED, "유효하지 않은 요청입니다."),
+
+
     // 404
     NOT_FOUND_QUESTION(NOT_FOUND, "질문을 찾을 수 없습니다."),
     NOT_FOUND_TEMPLATE(NOT_FOUND, "템플릿을 찾을 수 없습니다."),
