@@ -62,4 +62,8 @@ public class Template extends BaseTimeEntity {
         this.templateQuestions.addAll(templateQuestion);
         this.templateTags.addAll(templateTags);
     }
+
+    public void increaseUseCount() {
+        this.useCount++;
+    }
 }
