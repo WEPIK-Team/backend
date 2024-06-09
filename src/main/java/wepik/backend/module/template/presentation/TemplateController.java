@@ -75,4 +75,12 @@ public class TemplateController {
     public List<TemplateListResponse> findTemplatesByUseCount() {
         return templateService.findTemplatesByUseCount();
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/count/{id}")
+    @Operation(summary = "템플릿 사용 횟수 증가", description = "템플릿 사용 횟수를 1 증가시킵니다.")
+    public String updateUseCount(@PathVariable Long id) {
+        templateService.increaseCount(id);
+        return "템플릿 사용 횟수가 증가했습니다.";
+    }
 }

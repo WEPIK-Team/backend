@@ -92,6 +92,12 @@ public class TemplateService {
         template.update(request.getTitle(), file, updatedQuestions, updatedTags);
     }
 
+    public void increaseCount(final Long templateId) {
+        Template template = templateRepository.findById(templateId)
+                .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_TEMPLATE));
+        template.increaseUseCount();
+    }
+
     private List<TemplateQuestion> updateQuestion(Template template, TemplateRequest request) {
         List<TemplateQuestion> templateQuestions = template.getTemplateQuestions();
         for (TemplateQuestion templateQuestion : templateQuestions) {
