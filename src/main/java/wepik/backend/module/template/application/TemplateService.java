@@ -71,7 +71,6 @@ public class TemplateService {
                 .map(template -> TemplateListResponse.fromEntity(template))
                 .collect(Collectors.toList());
     }
-
     @Transactional(readOnly = true)
     public List<TemplateListResponse> findTemplatesByUseCount() {
         List<Template> templates = templateRepository.findAllOrderByUseCountDesc();
@@ -85,7 +84,7 @@ public class TemplateService {
         Template template = templateRepository.findById(templateId)
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_TEMPLATE));
         File file = fileRepository.findByStoredName(request.getStoredName())
-                .orElseThrow(() -> new WepikException(ErrorCode.EMPTY_FILE_EXCEPTION));
+                .orElseGet(() -> template.getFile());
 
         List<TemplateQuestion> updatedQuestions = updateQuestion(template, request);
         List<TemplateTag> updatedTags = updateTag(template, request);
@@ -98,11 +97,10 @@ public class TemplateService {
         template.increaseUseCount();
     }
 
-    private List<TemplateQuestion> updateQuestion(Template template, TemplateRequest request) {
+    public List<TemplateQuestion> updateQuestion(Template template, TemplateRequest request) {
         List<TemplateQuestion> templateQuestions = template.getTemplateQuestions();
-        for (TemplateQuestion templateQuestion : templateQuestions) {
-            templateQuestion.setTemplate(null);
-        }
+
+        templateQuestions.clear();
 
         List<Long> questionIds = request.getQuestionIds();
         List<Question> questions = questionRepository.findQuestionByIdIn(questionIds);
@@ -111,12 +109,12 @@ public class TemplateService {
                 .collect(Collectors.toList());
     }
 
-    private List<TemplateTag> updateTag(Template template, TemplateRequest request) {
+    public List<TemplateTag> updateTag(Template template, TemplateRequest request) {
         List<TemplateTag> templateTags = new ArrayList<>(template.getTemplateTags());
         for (TemplateTag templateTag : templateTags) {
             templateTag.setTemplate(null);
         }
-
+        
         List<String> tags = request.getTags();
         List<TemplateTag> updatedTags = new ArrayList<>();
         for (String tagName : tags) {

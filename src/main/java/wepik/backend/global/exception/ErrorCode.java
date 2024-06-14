@@ -10,7 +10,7 @@ import static org.springframework.http.HttpStatus.*;
 public enum ErrorCode {
 
     // 400
-    EMPTY_FILE_EXCEPTION(BAD_REQUEST, "이미지 파일이 존재하지 안습니다."),
+    EMPTY_FILE_EXCEPTION(BAD_REQUEST, "이미지 파일이 존재하지 않습니다."),
     MIME_TYPE_EXCEPTION(BAD_REQUEST, "파일 타입이 존재하지 않습니다."),
     MIME_TYPE_MISMATCH(BAD_REQUEST, "지원하지 않는 파일 형식입니다."),
     FILE_UPLOAD_FAILED(BAD_REQUEST, "파일 업로드에 실패했습니다."),
