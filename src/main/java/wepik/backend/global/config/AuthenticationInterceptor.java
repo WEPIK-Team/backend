@@ -15,6 +15,11 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         HttpSession session = request.getSession();
 
+//        //조회는 로그인 필요X
+//        if (request.getMethod().equals("GET")) {
+//            return true;
+//        }
+//
 //        if (session.getAttribute("admin") == null) {
 //            response.setStatus(401);
 //            return false;
