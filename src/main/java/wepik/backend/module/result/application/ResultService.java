@@ -29,11 +29,11 @@ public class ResultService {
     public ResultResponse loadResult(String senderUUID, String receiverUUID) {
 
         //sender
-        Result senderResult = resultRepository.findResultByTargetId(senderUUID);
+        Result senderResult = resultRepository.findResultById(senderUUID);
         List<ResultAnswerDto> senderResultAnswerDto = toAnswerDto(senderResult);
 
         //receiver
-        Result receiverResult = resultRepository.findResultByTargetId(receiverUUID);
+        Result receiverResult = resultRepository.findResultById(receiverUUID);
         List<ResultAnswerDto> receiverResultAnswerDto = toAnswerDto(receiverResult);
 
         return ResultResponse.builder()
@@ -44,7 +44,7 @@ public class ResultService {
     }
 
     protected List<ResultAnswerDto> toAnswerDto(Result result) {
-        List<Answer> answers = answerRepository.findAnswerByResultIdOrderBySequence(result.getTargetId());
+        List<Answer> answers = answerRepository.findAnswerByResultIdOrderBySequence(result.getId());
 
         List<ResultAnswerDto> resultAnswerDtos = answers.stream()
                 .map(answer -> ResultAnswerDto.builder()

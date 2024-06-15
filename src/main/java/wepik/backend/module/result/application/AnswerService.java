@@ -33,33 +33,22 @@ public class AnswerService {
         Template template = templateRepository.findById(answerRequest.getTemplateId())
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_TEMPLATE));
 
-        Result result;
+        Result result = Result.builder()
+                .id(UUID.randomUUID().toString())
+                .template(template)
+                .build();
+
         AnswerResponse answerResponse;
 
         //최조 요청
         if (answerRequest.getUuid() == null) {
-            result = Result.builder()
-                    .targetId(UUID.randomUUID().toString())
-                    .sourceId(UUID.randomUUID().toString())
-                    .template(template)
-                    .build();
-
             answerResponse = AnswerResponse.builder()
-                    .receiverId(result.getSourceId())
+                    .senderId(result.getId())
                     .build();
         } else {
-            log.info("응답자 UUID={}", answerRequest.getUuid());
-            String targetId = resultRepository.findTargetIdBySourceId(answerRequest.getUuid());
-
-            result = Result.builder()
-                    .targetId(answerRequest.getUuid())
-                    .sourceId(targetId)
-                    .template(template)
-                    .build();
-
             answerResponse = AnswerResponse.builder()
-                    .senderId(targetId)
-                    .receiverId(answerRequest.getUuid())
+                    .senderId(answerRequest.getUuid())
+                    .receiverId(result.getId())
                     .build();
         }
 

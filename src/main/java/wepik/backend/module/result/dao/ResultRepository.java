@@ -9,8 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ResultRepository extends JpaRepository<Result, String> {
 
-    Result findResultByTargetId(String answerId);
-
-    @Query("SELECT r.targetId FROM Result r WHERE r.sourceId = :sourceId")
-    String findTargetIdBySourceId(@Param("sourceId")String sourceId);
+    Result findResultById(String answerId);
 }

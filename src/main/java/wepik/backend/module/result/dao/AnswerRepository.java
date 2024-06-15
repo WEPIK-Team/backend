@@ -9,6 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
-    @Query("SELECT a FROM Answer a WHERE a.result.targetId = :resultId ORDER BY a.sequence")
-    List<Answer> findAnswerByResultIdOrderBySequence(@Param("resultId") String resultId);
+    List<Answer> findAnswerByResultIdOrderBySequence(String result);
 }
