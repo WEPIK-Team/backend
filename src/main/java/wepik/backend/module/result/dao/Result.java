@@ -34,7 +34,7 @@ public class Result {
 
     @OneToMany(mappedBy = "result")
     @Builder.Default
-    @Column(name = "answer_id", nullable = true)
+    @Column(name = "answer_id")
     private List<Answer> answers = new ArrayList<>();
 
     @ManyToOne

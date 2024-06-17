@@ -26,6 +26,9 @@ public class TemplateResponse {
     @Schema(description = "사용된 횟수", example = "23")
     private int useCount;
 
+    @Schema(description = "삭제 여부", example = "true")
+    private Boolean active;
+
     @Schema(description = "이미지 URL", example = "https://wepik-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/1a5de0ff-7948-4ca1-8979-15701385f778_programmers.jpeg")
     private String imageURL;
 
@@ -39,6 +42,7 @@ public class TemplateResponse {
                 .id(template.getId())
                 .title(template.getTitle())
                 .useCount(template.getUseCount())
+                .active(template.getActive())
                 .imageURL(file != null ? file.getPath() + file.getStoredName() : null)
                 .templateTags(getTemplateTags(template))
                 .questions(getQuestions(template))
