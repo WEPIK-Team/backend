@@ -23,14 +23,14 @@ public class WebConfig implements WebMvcConfigurer {
                         .maxAge(3600);
             }
 
+
             @Override
             public void addInterceptors(InterceptorRegistry registry) {
+                //todo session 체크하는 경로 지정
+                // 임시로 템플릿 생성만 session 체크
                 registry.addInterceptor(new AuthenticationInterceptor())
-                        .addPathPatterns("/**") // 모든 경로에 인터셉터 설정
-                        .excludePathPatterns(
-                                "/member/admin/**",
-                                "/result",
-                                "/answer");
+                        .addPathPatterns("/template")
+                        .excludePathPatterns("/**");
             }
         };
     }
