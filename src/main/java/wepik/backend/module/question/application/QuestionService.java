@@ -13,6 +13,7 @@ import wepik.backend.module.question.dao.QuestionRepository;
 import wepik.backend.module.question.dao.SelectQuestion;
 import wepik.backend.module.question.dto.QuestionRequest;
 import wepik.backend.module.question.dto.QuestionResponse;
+import wepik.backend.module.template.dao.TemplateQuestionRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class QuestionService {
     private final QuestionRepository questionRepository;
     private final FileRepository fileRepository;
+    private final TemplateQuestionRepository templateQuestionRepository;
     public QuestionResponse save(final QuestionRequest questionRequest) {
         File file = fileRepository.findByStoredName(questionRequest.getStoredName())
                 .orElse(null);
@@ -44,14 +46,17 @@ public class QuestionService {
 
     @Transactional(readOnly = true)
     public List<QuestionResponse> findQuestions() {
-        List<Question> questions = questionRepository.findAll();
+        List<Question> questions = questionRepository.findByActiveTrue();
         return questions.stream().map(question -> QuestionResponse.fromEntity(question)).collect(Collectors.toList());
     }
 
     public void delete(final Long questionId) {
-        questionRepository.findById(questionId)
+        Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_QUESTION));
-        questionRepository.deleteById(questionId);
+        if (templateQuestionRepository.existsByQuestionId(questionId)) {
+            throw new WepikException(ErrorCode.FORBIDDEN_DELETE_QUESTION);
+        }
+        question.delete(); // 해당 질문이 템플릿에 사용되고 있지 않다면 active 상태를 false로 전환
     }
 
     public void updateQuestion(final Long questionId, final QuestionRequest request) {

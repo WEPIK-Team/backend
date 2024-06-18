@@ -14,4 +14,7 @@ public interface TemplateRepository extends JpaRepository<Template, Long> {
     @Query("SELECT t FROM Template t ORDER BY t.useCount DESC")
     List<Template> findAllOrderByUseCountDesc();
 
+
+    List<Template> findByActiveTrue();
+
 }

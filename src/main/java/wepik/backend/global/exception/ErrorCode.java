@@ -18,6 +18,8 @@ public enum ErrorCode {
     //401
     UNAUTHORIZED_REQUEST(UNAUTHORIZED, "유효하지 않은 요청입니다."),
 
+    //403
+    FORBIDDEN_DELETE_QUESTION(FORBIDDEN, "해당 질문이 템플릿에 사용되고 있기 때문에 삭제할 수 없습니다."),
 
     // 404
     NOT_FOUND_QUESTION(NOT_FOUND, "질문을 찾을 수 없습니다."),

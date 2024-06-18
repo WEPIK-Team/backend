@@ -21,6 +21,7 @@ import wepik.backend.module.member.dto.LoginRequest;
 public class MemberController {
 
     private final MemberService memberService;
+
     @PostMapping("/admin/login")
     public AdminLoginResponse login(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
         if (memberService.login(loginRequest)) {

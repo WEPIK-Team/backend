@@ -28,6 +28,9 @@ public class Question extends BaseTimeEntity {
     @Column(nullable = false)
     private AnswerType type;
 
+    @Column(nullable = false)
+    private Boolean active;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "file_id")
     private File file;
@@ -47,6 +50,15 @@ public class Question extends BaseTimeEntity {
         this.type = type;
         this.selectQuestions.addAll(selectQuestions);
         this.file = file;
+    }
+
+    public void delete() {
+        this.active = false;
+    }
+
+    @PrePersist // 테이블 생성될 때 값을 할당
+    public void init() {
+        this.active = true;
     }
 
 }

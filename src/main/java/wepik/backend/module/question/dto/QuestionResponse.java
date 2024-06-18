@@ -24,6 +24,9 @@ public class QuestionResponse {
     @Schema(description = "질문 타입", example = "BAR")
     private AnswerType type;
 
+    @Schema(description = "삭제 여부", example = "true")
+    private Boolean active;
+
     @Schema(description = "이미지 URL", example = "https://wepik-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/15ee44f4-eaad-400d-aaa1-ff38fd23df58_03445adc-ceb1-476e-ad62-ab643347a473_강아지.jpeg")
     private String imageURL;
 
@@ -41,6 +44,7 @@ public class QuestionResponse {
                 .id(question.getId())
                 .title(question.getTitle())
                 .type(question.getType())
+                .active(question.getActive())
                 .imageURL(file != null ? file.getPath() + file.getStoredName() : null)
                 .selectQuestions(selectResponses)
                 .build();

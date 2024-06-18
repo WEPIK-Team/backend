@@ -46,7 +46,7 @@ public class TemplateService {
 
     @Transactional(readOnly = true)
     public List<TemplateListResponse> findTemplates() {
-        List<Template> templates = templateRepository.findAll();
+        List<Template> templates = templateRepository.findByActiveTrue();
 
         return templates.stream()
                 .map(template -> TemplateListResponse.fromEntity(template))
@@ -54,9 +54,9 @@ public class TemplateService {
     }
 
     public void deleteById(final Long templateId) {
-        templateRepository.findById(templateId)
+        Template template = templateRepository.findById(templateId)
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_TEMPLATE));
-        templateRepository.deleteById(templateId);
+        template.delete();
     }
 
     @Transactional(readOnly = true)
