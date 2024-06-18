@@ -29,8 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
                 //todo session 체크하는 경로 지정
                 // 임시로 템플릿 생성만 session 체크
                 registry.addInterceptor(new AuthenticationInterceptor())
-                        .addPathPatterns("/template")
-                        .excludePathPatterns("/**");
+                        .addPathPatterns("/template");
             }
         };
     }
