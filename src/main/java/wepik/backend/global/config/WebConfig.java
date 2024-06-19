@@ -12,7 +12,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
-
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
@@ -22,7 +21,6 @@ public class WebConfig implements WebMvcConfigurer {
                         .allowedHeaders("*")
                         .maxAge(3600);
             }
-
 
             @Override
             public void addInterceptors(InterceptorRegistry registry) {
