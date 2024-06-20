@@ -16,6 +16,7 @@ import wepik.backend.module.template.dto.TemplateRequest;
 import wepik.backend.module.template.dto.TemplateResponse;
 import wepik.backend.module.template.dto.TemplateTagDto;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,7 @@ public class TemplateService {
     public TemplateResponse save(final TemplateRequest request) {
         File file = fileRepository.findByStoredName(request.getStoredName())
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_FILE));
-        List<Question> questions = questionRepository.findQuestionByIdIn(request.getQuestionIds());
+        List<Question> questions = findQuestionsByIdsInOrder(request.getQuestionIds());
         Template template = request.toEntity(file, questions);
         return TemplateResponse.fromEntity(templateRepository.save(template));
     }
@@ -47,7 +48,6 @@ public class TemplateService {
     @Transactional(readOnly = true)
     public List<TemplateListResponse> findTemplates() {
         List<Template> templates = templateRepository.findByActiveTrue();
-
         return templates.stream()
                 .map(template -> TemplateListResponse.fromEntity(template))
                 .collect(Collectors.toList());
@@ -57,6 +57,7 @@ public class TemplateService {
         Template template = templateRepository.findById(templateId)
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_TEMPLATE));
         template.delete();
+        template.getTemplateQuestions().clear(); // 템플릿이 삭제될 때 중간테이블 값을 db에서 삭제
     }
 
     @Transactional(readOnly = true)
@@ -121,5 +122,12 @@ public class TemplateService {
             updatedTags.add(TemplateTagDto.updateTags(tagName, template));
         }
         return updatedTags;
+    }
+
+    private List<Question> findQuestionsByIdsInOrder(List<Long> ids) {
+        List<Question> questions = questionRepository.findQuestionByIdIn(ids);
+        return questions.stream()
+                .sorted(Comparator.comparingInt(q -> ids.indexOf(q.getId())))
+                .collect(Collectors.toList());
     }
 }
