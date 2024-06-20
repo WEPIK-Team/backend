@@ -56,12 +56,8 @@ public class TemplateService {
     public void deleteById(final Long templateId) {
         Template template = templateRepository.findById(templateId)
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_TEMPLATE));
-        List<TemplateQuestion> templateQuestions = template.getTemplateQuestions();
-        for (TemplateQuestion templateQuestion : templateQuestions) { // 템플릿이 삭제될 때 중간테이블 데이터들 null 처리
-            templateQuestion.setQuestion(null);
-            templateQuestion.setTemplate(null);
-        }
         template.delete();
+        template.getTemplateQuestions().clear(); // 템플릿이 삭제될 때 중간테이블 값을 db에서 삭제
     }
 
     @Transactional(readOnly = true)
