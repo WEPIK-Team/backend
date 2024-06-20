@@ -10,6 +10,7 @@ import wepik.backend.module.template.dto.TemplateListResponse;
 import wepik.backend.module.template.dto.TemplateRequest;
 import wepik.backend.module.template.dto.TemplateResponse;
 import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/template")
@@ -41,7 +42,7 @@ public class TemplateController {
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
-    @Operation(summary = "템플릿 삭제", description = "id 값에 해당하는 템플릿의 active 값을 false로 변경한다")
+    @Operation(summary = "템플릿 삭제", description = "id 값에 해당하는 템플릿을 삭제한다")
     public String deleteTemplate(@PathVariable Long id) {
         templateService.deleteById(id);
         return "템플릿이 정상적으로 삭제되었습니다.";
@@ -54,7 +55,7 @@ public class TemplateController {
         templateService.updateTemplate(id, request);
         return "템플릿이 정상적으로 수정되었습니다.";
     }
-  
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/tags")
     @Operation(summary = "모든 태그 조회", description = "저장되어 있는 모든 태그를 조회한다.")
