@@ -1,5 +1,5 @@
 #!/bin/bash
-PROJECT_ROOT="/home/ubuntu/wepik-backend"
+PROJECT_PATH="/home/ubuntu/wepik"
 DEPLOY_LOG_PATH="$PROJECT_PATH/logs/deploy.log"
 DEPLOY_ERR_LOG_PATH="$PROJECT_PATH/logs/deploy_err.log"
 APPLICATION_LOG_PATH="$PROJECT_PATH/logs/application.log"
