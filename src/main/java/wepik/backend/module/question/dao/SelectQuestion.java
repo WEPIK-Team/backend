@@ -24,9 +24,6 @@ public class SelectQuestion {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
-    private int selectSequence;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;

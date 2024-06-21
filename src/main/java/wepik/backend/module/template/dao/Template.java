@@ -36,7 +36,7 @@ public class Template extends BaseTimeEntity {
     private Member member;
 
     @OneToOne
-    @JoinColumn(name = "file_id", nullable = false)
+    @JoinColumn(name = "file_id" , nullable = false)
     private File file;
 
     @Builder.Default

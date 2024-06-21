@@ -64,7 +64,7 @@ public class ResultService {
         List<SelectQuestionDto> selectQuestionDtos = new ArrayList<>();
 
         for (SelectQuestion selectQuestion : selectQuestions) {
-            selectQuestionDtos.add(new SelectQuestionDto(selectQuestion.getSelectSequence(), selectQuestion.getTitle()));
+            selectQuestionDtos.add(new SelectQuestionDto(selectQuestion.getTitle()));
         }
 
         return selectQuestionDtos;
