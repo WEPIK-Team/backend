@@ -56,14 +56,6 @@ public class TemplateController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{id}")
-    @Operation(summary = "템플릿 수정", description = "id값에 해당하는 템플릿을 수정한다.")
-    public String updateTemplate(@PathVariable Long id, @RequestBody TemplateRequest request) {
-        templateService.updateTemplate(id, request);
-        return "템플릿이 정상적으로 수정되었습니다.";
-    }
-  
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/tags")
     @Operation(summary = "모든 태그 조회", description = "저장되어 있는 모든 태그를 조회한다.")
     public List<String> findAllTag() {
