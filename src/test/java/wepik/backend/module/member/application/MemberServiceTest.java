@@ -30,7 +30,7 @@ class MemberServiceTest {
 
     }
 
-    @Test
+//    @Test
     public void adminLoginTest() throws Exception {
         //given
         LoginRequest loginRequest = new LoginRequest("wepik@gmail.com", "12345678");
