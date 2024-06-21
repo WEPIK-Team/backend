@@ -3,15 +3,12 @@ package wepik.backend.module.template.dao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import wepik.backend.global.common.BaseTimeEntity;
 import wepik.backend.module.file.dao.File;
 import wepik.backend.module.member.dao.Member;
 import wepik.backend.module.result.dao.Result;
 import java.util.ArrayList;
 import java.util.List;
-
-
 @Entity
 @Getter
 @Builder
@@ -28,7 +25,6 @@ public class Template extends BaseTimeEntity {
     private String title;
 
     @PositiveOrZero
-    @ColumnDefault("0")
     @Column(nullable = false)
     private int useCount;
 
@@ -72,7 +68,6 @@ public class Template extends BaseTimeEntity {
         this.templateQuestions.addAll(templateQuestion);
         this.templateTags.addAll(templateTags);
     }
-
 
     public void increaseUseCount() {
         this.useCount++;

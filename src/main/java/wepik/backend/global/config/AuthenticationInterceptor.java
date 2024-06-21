@@ -1,5 +1,6 @@
 package wepik.backend.global.config;
 
+import static wepik.backend.global.exception.ErrorCode.UNAUTHORIZED_REQUEST;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
