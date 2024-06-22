@@ -14,6 +14,7 @@ import wepik.backend.module.member.dao.Role;
 import wepik.backend.module.member.dto.JoinRequest;
 import wepik.backend.module.member.dto.LoginRequest;
 import wepik.backend.module.member.dao.MemberRepository;
+import wepik.backend.module.member.dto.MemberInfo;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +53,17 @@ public class MemberService {
         session.setMaxInactiveInterval(1800);
         return session.getId();
 
+    }
+
+    public MemberInfo getUserInfoByEmail(String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_EMAIL));
+
+        return MemberInfo.builder()
+                .email(member.getEmail())
+                .nickname(member.getNickname())
+                .role(member.getRole().toString())
+                .build();
     }
 
 }
