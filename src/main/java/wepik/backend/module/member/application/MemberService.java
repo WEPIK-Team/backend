@@ -24,10 +24,24 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public boolean adminLogin(LoginRequest loginRequest) {
+    public MemberInfo adminLogin(LoginRequest loginRequest, HttpServletRequest request) {
         Member member = memberRepository.findMemberByEmailAndRole(loginRequest.getEmail(), Role.ADMIN)
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_EMAIL));
-        return passwordEncoder.matches(loginRequest.getPassword(), member.getPassword());
+
+        if (passwordEncoder.matches(loginRequest.getPassword(), member.getPassword())) {
+
+            HttpSession session = request.getSession();
+            session.setAttribute("user", loginRequest.getEmail());
+            session.setMaxInactiveInterval(1800);
+
+            return MemberInfo.builder()
+                    .email(member.getEmail())
+                    .nickname(member.getNickname())
+                    .role(member.getRole().toString())
+                    .build();
+        } else {
+            throw new WepikException(ErrorCode.INVALID_PASSWORD);
+        }
     }
 
     public void join(final JoinRequest joinRequest) {
