@@ -2,9 +2,12 @@ package wepik.backend.module.template.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import wepik.backend.aop.RequestMember;
+import wepik.backend.module.member.dao.Member;
 import wepik.backend.module.template.application.TemplateService;
 import wepik.backend.module.template.dto.TemplateListResponse;
 import wepik.backend.module.template.dto.TemplateRequest;
@@ -21,8 +24,9 @@ public class TemplateController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     @Operation(summary = "템플릿 생성", description = "템플릿을 생성한다")
-    public TemplateResponse createTemplate(@RequestBody TemplateRequest templateRequest) {
-        return templateService.save(templateRequest);
+    @RequestMember
+    public TemplateResponse createTemplate(HttpServletRequest request, @RequestBody TemplateRequest templateRequest, Member member) {
+        return templateService.save(templateRequest, member);
     }
 
     @ResponseStatus(HttpStatus.OK)

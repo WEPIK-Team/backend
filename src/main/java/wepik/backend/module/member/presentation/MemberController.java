@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import wepik.backend.module.member.application.MemberService;
+import wepik.backend.module.member.dao.Member;
 import wepik.backend.module.member.dto.JoinRequest;
 import wepik.backend.module.member.dto.LoginRequest;
 import wepik.backend.module.member.dto.MemberInfo;
@@ -53,8 +54,12 @@ public class MemberController {
     @Operation(summary = "세션ID로 회원 정보 반환", description = "쿠키에 세션ID를 담아 요청하면 해당 세션의 회원 정보를 보내준다.")
     public MemberInfo getSessionMemberInfo(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String sessionEmail = (String) session.getAttribute("user");
+        Member member = (Member) session.getAttribute("user");
 
-        return memberService.getUserInfoByEmail(sessionEmail);
+        return MemberInfo.builder()
+                .email(member.getEmail())
+                .nickname(member.getNickname())
+                .role(member.getRole().toString())
+                .build();
     }
 }

@@ -31,7 +31,7 @@ public class MemberService {
         if (passwordEncoder.matches(loginRequest.getPassword(), member.getPassword())) {
 
             HttpSession session = request.getSession();
-            session.setAttribute("user", loginRequest.getEmail());
+            session.setAttribute("user", member);
             session.setMaxInactiveInterval(1800);
 
             return MemberInfo.builder()
@@ -63,21 +63,10 @@ public class MemberService {
             throw new WepikException(ErrorCode.INVALID_PASSWORD);
         }
         HttpSession session = request.getSession();
-        session.setAttribute("user", loginRequest.getEmail());
+        session.setAttribute("user", member);
         session.setMaxInactiveInterval(1800);
         return session.getId();
 
-    }
-
-    public MemberInfo getUserInfoByEmail(String email) {
-        Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_EMAIL));
-
-        return MemberInfo.builder()
-                .email(member.getEmail())
-                .nickname(member.getNickname())
-                .role(member.getRole().toString())
-                .build();
     }
 
 }

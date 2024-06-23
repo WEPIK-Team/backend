@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import wepik.backend.module.file.dao.File;
+import wepik.backend.module.member.dao.Member;
 import wepik.backend.module.question.dao.AnswerType;
 import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.question.dao.Question.QuestionBuilder;
@@ -30,10 +31,11 @@ public class QuestionRequest {
 
     private List<SelectRequest> selectQuestions;
 
-    public Question toEntity(File file) {
+    public Question toEntity(File file, Member member) {
         QuestionBuilder builder = Question.builder()
                 .title(title)
                 .type(type)
+                .member(member)
                 .selectQuestions(getSelectedQuestion(selectQuestions));
 
         if (file != null) {

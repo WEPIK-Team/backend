@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import wepik.backend.module.file.dao.File;
+import wepik.backend.module.member.dao.Member;
 import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.template.dao.Template;
 import wepik.backend.module.template.dao.TemplateQuestion;
@@ -25,10 +26,11 @@ public class TemplateRequest {
     private List<String> tags;
 
     private List<Long> questionIds;
-    public Template toEntity(File file, List<Question> questions) {
+    public Template toEntity(File file, List<Question> questions, Member member) {
         Template template = Template.builder()
                 .title(title)
                 .file(file)
+                .member(member)
                 .build();
 
         List<TemplateTag> tags = getTemplateTags();
