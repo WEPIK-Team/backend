@@ -8,9 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import wepik.backend.module.member.application.MemberService;
-import wepik.backend.module.member.dto.AdminLoginResponse;
 import wepik.backend.module.member.dto.JoinRequest;
 import wepik.backend.module.member.dto.LoginRequest;
+import wepik.backend.module.member.dto.MemberInfo;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,22 +22,8 @@ public class MemberController {
 
     @PostMapping("/admin/login")
     @Operation(summary = "관리자 로그인",description = "이메일과 비밀번호를 입력해서 로그인을 진행한다.")
-    public AdminLoginResponse adminLogin(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
-        if (memberService.adminLogin(loginRequest)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("admin", loginRequest.getEmail());
-            session.setMaxInactiveInterval(1800);
-
-            return AdminLoginResponse.builder()
-                    .httpStatus(HttpStatus.OK)
-                    .email(loginRequest.getEmail())
-                    .build();
-        } else {
-            return AdminLoginResponse.builder()
-                    .httpStatus(HttpStatus.FORBIDDEN)
-                    .email(loginRequest.getEmail())
-                    .build();
-        }
+    public MemberInfo adminLogin(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
+        return memberService.adminLogin(loginRequest, request);
     }
 
     @GetMapping("/admin/logout")
@@ -60,5 +46,15 @@ public class MemberController {
     @Operation(summary = "회원 로그인", description = "이메일과 비밀번호를 입력해서 로그인을 진행한다.")
     public String memberLogin(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
         return memberService.userLogin(loginRequest, request);
+    }
+
+    @ResponseStatus
+    @GetMapping("/session")
+    @Operation(summary = "세션ID로 회원 정보 반환", description = "쿠키에 세션ID를 담아 요청하면 해당 세션의 회원 정보를 보내준다.")
+    public MemberInfo getSessionMemberInfo(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String sessionEmail = (String) session.getAttribute("user");
+
+        return memberService.getUserInfoByEmail(sessionEmail);
     }
 }
