@@ -8,6 +8,7 @@ import wepik.backend.global.exception.ErrorCode;
 import wepik.backend.global.exception.WepikException;
 import wepik.backend.module.file.dao.File;
 import wepik.backend.module.file.dao.FileRepository;
+import wepik.backend.module.member.dao.Member;
 import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.question.dao.QuestionRepository;
 import wepik.backend.module.template.dao.*;
@@ -30,11 +31,11 @@ public class TemplateService {
     private final TagRepository tagRepository;
     private final FileRepository fileRepository;
 
-    public TemplateResponse save(final TemplateRequest request) {
+    public TemplateResponse save(final TemplateRequest request, Member member) {
         File file = fileRepository.findByStoredName(request.getStoredName())
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_FILE));
         List<Question> questions = findQuestionsByIdsInOrder(request.getQuestionIds());
-        Template template = request.toEntity(file, questions);
+        Template template = request.toEntity(file, questions, member);
         return TemplateResponse.fromEntity(templateRepository.save(template));
     }
 

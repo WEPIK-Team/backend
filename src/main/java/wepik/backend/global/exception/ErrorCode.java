@@ -29,6 +29,7 @@ public enum ErrorCode {
     NOT_FOUND_EMAIL(NOT_FOUND, "이메일을 찾을 수 없습니다."),
     NOT_FOUND_FILE(NOT_FOUND, "이미지를 찾을 수 없습니다."),
     NOT_FOUND_ANSWER(NOT_FOUND, "답변을 찾을 수 없습니다."),
+    NOT_FOUND_SESSION(NOT_FOUND, "세션을 찾을 수 없습니다."),
 
     // 409
     ALREADY_REGISTERED_EMAIL(CONFLICT, "이미 등록된 이메일이 존재합니다."),

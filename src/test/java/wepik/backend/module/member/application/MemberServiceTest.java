@@ -1,12 +1,15 @@
 package wepik.backend.module.member.application;
 
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import wepik.backend.global.exception.WepikException;
 import wepik.backend.module.member.dto.LoginRequest;
+import wepik.backend.module.member.dto.MemberInfo;
 
 @SpringBootTest
 class MemberServiceTest {
@@ -36,10 +39,10 @@ class MemberServiceTest {
         LoginRequest loginRequest = new LoginRequest("wepik@gmail.com", "12345678");
 
         //when
-        boolean isLogin = memberService.adminLogin(loginRequest);
+        MemberInfo memberInfo = memberService.adminLogin(loginRequest, null);
 
         //then
-        Assertions.assertThat(isLogin).isTrue();
+        Assertions.assertThat(memberInfo.getEmail()).isEqualTo(loginRequest.getEmail());
     }
 
 

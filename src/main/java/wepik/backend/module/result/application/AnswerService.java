@@ -1,5 +1,6 @@
 package wepik.backend.module.result.application;
 
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wepik.backend.global.exception.ErrorCode;
 import wepik.backend.global.exception.WepikException;
+import wepik.backend.module.member.dao.Member;
 import wepik.backend.module.question.dao.QuestionRepository;
 import wepik.backend.module.result.dao.Answer;
 import wepik.backend.module.result.dao.AnswerRepository;
@@ -29,14 +31,11 @@ public class AnswerService {
     private final ResultRepository resultRepository;
 
     @Transactional
-    public AnswerResponse saveAnswer(AnswerRequest answerRequest) {
+    public AnswerResponse saveAnswer(AnswerRequest answerRequest, Member member) {
         Template template = templateRepository.findById(answerRequest.getTemplateId())
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_TEMPLATE));
 
-        Result result = Result.builder()
-                .id(UUID.randomUUID().toString())
-                .template(template)
-                .build();
+        Result result = getResult(member, template);
 
         AnswerResponse answerResponse;
 
@@ -58,6 +57,19 @@ public class AnswerService {
         answerRepository.saveAll(answers);
         return answerResponse;
     }
+
+    private static Result getResult(Member member, Template template) {
+        Result.ResultBuilder resultBuilder = Result.builder()
+                .id(UUID.randomUUID().toString())
+                .template(template);
+
+        if (member != null) {
+            resultBuilder.member(member);
+        }
+
+        return resultBuilder.build();
+    }
+
 
     private List<Answer> toAnswers(List<AnswerDto> answerDtos, Result result) {
         return answerDtos.stream()

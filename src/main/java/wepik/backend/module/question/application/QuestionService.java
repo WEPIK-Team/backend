@@ -8,6 +8,7 @@ import wepik.backend.global.exception.ErrorCode;
 import wepik.backend.global.exception.WepikException;
 import wepik.backend.module.file.dao.File;
 import wepik.backend.module.file.dao.FileRepository;
+import wepik.backend.module.member.dao.Member;
 import wepik.backend.module.question.dao.Question;
 import wepik.backend.module.question.dao.QuestionRepository;
 import wepik.backend.module.question.dao.SelectQuestion;
@@ -25,10 +26,11 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final FileRepository fileRepository;
     private final TemplateQuestionRepository templateQuestionRepository;
-    public QuestionResponse save(final QuestionRequest questionRequest) {
+
+    public QuestionResponse save(final QuestionRequest questionRequest, Member member) {
         File file = fileRepository.findByStoredName(questionRequest.getStoredName())
                 .orElse(null);
-        Question question = questionRequest.toEntity(file);
+        Question question = questionRequest.toEntity(file, member);
 
         List<SelectQuestion> selectQuestions = question.getSelectQuestions();
         for (SelectQuestion selectQuestion : selectQuestions) {

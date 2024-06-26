@@ -19,7 +19,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        if (session.getAttribute("admin") == null) {
+        if (session.getAttribute("user") == null) {
             response.setStatus(401);
             return false;
         }
