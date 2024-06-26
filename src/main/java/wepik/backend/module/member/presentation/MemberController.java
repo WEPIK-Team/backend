@@ -49,7 +49,7 @@ public class MemberController {
         return memberService.userLogin(loginRequest, request);
     }
 
-    @ResponseStatus
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/session")
     @Operation(summary = "세션ID로 회원 정보 반환", description = "쿠키에 세션ID를 담아 요청하면 해당 세션의 회원 정보를 보내준다.")
     public MemberInfo getSessionMemberInfo(HttpServletRequest request) {
