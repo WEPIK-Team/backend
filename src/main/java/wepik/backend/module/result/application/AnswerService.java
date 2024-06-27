@@ -49,6 +49,10 @@ public class AnswerService {
                     .senderId(answerRequest.getUuid())
                     .receiverId(result.getId())
                     .build();
+
+            //템플릿 count 1 증가
+            template.increaseUseCount();
+            templateRepository.save(template);
         }
 
         List<Answer> answers = toAnswers(answerRequest.getAnswerDtos(), result);
