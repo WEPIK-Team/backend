@@ -65,7 +65,7 @@ public class QuestionService {
         Question findQuestion = questionRepository.findById(questionId)
                 .orElseThrow(() -> new WepikException(ErrorCode.NOT_FOUND_QUESTION));
         File file = fileRepository.findByStoredName(request.getStoredName())
-                .orElse(null);
+                .orElseGet(() -> findQuestion.getFile());
 
         findQuestion.getSelectQuestions().clear();
 
